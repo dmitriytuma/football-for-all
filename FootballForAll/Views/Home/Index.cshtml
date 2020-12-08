@@ -1,8 +1,25 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<ChampionshipViewModel>
+@{
+    ViewData["Title"] = "Welcome";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @foreach (var championship in Model)
+    {
+        <h3><a asp-area="" asp-controller="Championship" asp-action="Index">@championship.Name</a></h3>
+        <ul class="list-group">
+        @foreach (var club in championship.ResultsTable)
+        {
+            <li class="list-group-item">
+                @($"{club.Fixtures[0].Date}")
+                |
+                <a asp-area="" asp-controller="Club" asp-action="Index">@club.Fixtures[0].HomeTeam.Name</a>
+                -
+                <a asp-area="" asp-controller="Club" asp-action="Index">@club.Fixtures[0].AwayTeam.Name</a>
+                |
+                <a asp-area="" asp-controller="Match" asp-action="Index">More info...</a>
+            </li>
+        }
+        </ul>
+    }
 </div>

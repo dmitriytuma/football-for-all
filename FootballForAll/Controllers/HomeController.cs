@@ -20,10 +20,14 @@ namespace FootballForAll.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var championships = new List<ChampionshipViewModel>{
+                new ChampionshipViewModel()
+            };
+
+            return View(championships);
         }
 
-        public IActionResult Privacy()
+        public IActionResult Contacts()
         {
             return View();
         }

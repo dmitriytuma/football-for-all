@@ -1,0 +1,11 @@
+﻿@model MatchViewModel
+@{
+    ViewData["Title"] = "Match";
+}
+
+<div class="text-center">
+    <h2>@Model.HomeTeam.Name @Model.Result @Model.AwayTeam.Name</h2>
+    <br />
+    <h6>Stadium - @Model.Stadium | Date - @Model.Date.ToString()</h6>
+    <h6>Main referee - @Model.MainReferee</h6>
+</div>
