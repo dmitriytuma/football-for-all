@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballForAll", "FootballForAll\FootballForAll.csproj", "{A0C6756D-0B1D-4710-A8AE-B33DB1D47136}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FootballForAll.Web", "FootballForAll.Web\FootballForAll.Web.csproj", "{A0C6756D-0B1D-4710-A8AE-B33DB1D47136}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballForAll.Data", "FootballForAll.Data\FootballForAll.Data.csproj", "{8FCE5BC7-E2D4-4134-BE5C-17238D2BBCED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A0C6756D-0B1D-4710-A8AE-B33DB1D47136}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0C6756D-0B1D-4710-A8AE-B33DB1D47136}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0C6756D-0B1D-4710-A8AE-B33DB1D47136}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FCE5BC7-E2D4-4134-BE5C-17238D2BBCED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FCE5BC7-E2D4-4134-BE5C-17238D2BBCED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FCE5BC7-E2D4-4134-BE5C-17238D2BBCED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FCE5BC7-E2D4-4134-BE5C-17238D2BBCED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

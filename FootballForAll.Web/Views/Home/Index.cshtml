@@ -1,0 +1,27 @@
+﻿@model IEnumerable<SeasonViewModel>
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<div class="text-center">
+    @foreach (var season in Model)
+    {
+        <h3><a asp-area="" asp-controller="Season" asp-action="Index">@season.FullName</a></h3>
+        <ul class="list-group">
+        @foreach (var match in season.Matches)
+        {
+            <li class="list-group-item">
+                @($"{match.PlayedOn}")
+                |
+                <a asp-area="" asp-controller="Club" asp-action="Index">@match.HomeTeamName</a>
+                @match.HomeTeamGoals
+                -
+                @match.AwayTeamGoals
+                <a asp-area="" asp-controller="Club" asp-action="Index">@match.AwayTeamName</a>
+                |
+                <a asp-area="" asp-controller="Match" asp-action="Index">More info...</a>
+            </li>
+        }
+        </ul>
+    }
+</div>
