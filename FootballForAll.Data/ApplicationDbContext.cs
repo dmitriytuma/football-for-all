@@ -39,6 +39,20 @@ namespace FootballForAll.Data
 
         #endregion DbSets
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            // Needed for Identity models configuration
+            base.OnModelCreating(builder);
+
+            // Disable cascade delete
+            var entityTypes = builder.Model.GetEntityTypes().ToList();
+            var foreignKeys = entityTypes.SelectMany(e => e.GetForeignKeys().Where(f => f.DeleteBehavior == DeleteBehavior.Cascade));
+            foreach (var foreignKey in foreignKeys)
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+        }
+
         /// <summary>
         /// Add audit info (extra info about CreatedOn and ModifiedOn dates) to the changed entities and save the changes to DB.
         /// </summary>
