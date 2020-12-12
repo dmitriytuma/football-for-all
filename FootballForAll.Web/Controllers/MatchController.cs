@@ -1,7 +1,7 @@
-﻿using FootballForAll.Models;
+﻿using FootballForAll.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FootballForAll.Controllers
+namespace FootballForAll.Web.Controllers
 {
     public class MatchController : Controller
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FootballForAll.Models
+namespace FootballForAll.Web.Models
 {
     public class MatchViewModel
     {

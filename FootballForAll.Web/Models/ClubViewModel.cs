@@ -1,9 +1,8 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace FootballForAll.Models
+namespace FootballForAll.Web.Models
 {
     public class ClubViewModel
     {

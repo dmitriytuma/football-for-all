@@ -2,7 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>aspnet-FootballForAll-9165EEA4-A359-4022-A218-F0FEEEFAA75C</UserSecretsId>
+    <UserSecretsId>aspnet-FootballForAll.Web-9165EEA4-A359-4022-A218-F0FEEEFAA75C</UserSecretsId>
+    <AssemblyName>FootballForAll.Web</AssemblyName>
+    <RootNamespace>FootballForAll.Web</RootNamespace>
   </PropertyGroup>
 
 
