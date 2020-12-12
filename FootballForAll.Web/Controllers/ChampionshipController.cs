@@ -1,4 +1,5 @@
-﻿using FootballForAll.Web.Models;
+﻿using System;
+using FootballForAll.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballForAll.Web.Controllers
@@ -7,8 +8,7 @@ namespace FootballForAll.Web.Controllers
     {
         public IActionResult Index()
         {
-            var championshipViewModel = new ChampionshipViewModel();
-            return View(championshipViewModel);
+            throw new NotImplementedException();
         }
     }
 }

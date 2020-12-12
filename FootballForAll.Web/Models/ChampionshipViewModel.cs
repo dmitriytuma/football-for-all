@@ -1,37 +1,15 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FootballForAll.Web.Models
 {
     public class ChampionshipViewModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "Country")]
-        public string Country { get; set; }
-
-        [Display(Name = "Championship type")]
-        public string Type { get; set; } // EPL, Serie A, La Liga ...
-
-        [Display(Name = "Season")]
-        public string Season { get; set; }
+        public string Country { get; set; } // TODO: instead of type string - type CountryViewModel?
 
         [Display(Name = "Name")]
-        public string Name => $"{Type} - {Season}";
-
-        [Display(Name = "Results table")]
-        public List<ClubViewModel> ResultsTable { get; set; }
-
-        public ChampionshipViewModel()
-        {
-            // TODO: this example info to be deleted, when EFCore and DB are implemented
-            Country = "England";
-            Type = "English Premier League";
-            Season = "2020/21";
-            ResultsTable = new List<ClubViewModel>
-            {
-                new ClubViewModel(this),
-                new ClubViewModel(this),
-                new ClubViewModel(this)
-            };
-        }
+        public string Name { get; set; }
     }
 }

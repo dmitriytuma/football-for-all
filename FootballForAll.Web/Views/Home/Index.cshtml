@@ -1,21 +1,23 @@
-﻿@model IEnumerable<ChampionshipViewModel>
+﻿@model IEnumerable<SeasonViewModel>
 @{
     ViewData["Title"] = "Welcome";
 }
 
 <div class="text-center">
-    @foreach (var championship in Model)
+    @foreach (var season in Model)
     {
-        <h3><a asp-area="" asp-controller="Championship" asp-action="Index">@championship.Name</a></h3>
+        <h3><a asp-area="" asp-controller="Season" asp-action="Index">@season.FullName</a></h3>
         <ul class="list-group">
-        @foreach (var club in championship.ResultsTable)
+        @foreach (var match in season.Matches)
         {
             <li class="list-group-item">
-                @($"{club.Fixtures[0].Date}")
+                @($"{match.PlayedOn}")
                 |
-                <a asp-area="" asp-controller="Club" asp-action="Index">@club.Fixtures[0].HomeTeam.Name</a>
+                <a asp-area="" asp-controller="Club" asp-action="Index">@match.HomeTeamName</a>
+                @match.HomeTeamGoals
                 -
-                <a asp-area="" asp-controller="Club" asp-action="Index">@club.Fixtures[0].AwayTeam.Name</a>
+                @match.AwayTeamGoals
+                <a asp-area="" asp-controller="Club" asp-action="Index">@match.AwayTeamName</a>
                 |
                 <a asp-area="" asp-controller="Match" asp-action="Index">More info...</a>
             </li>
