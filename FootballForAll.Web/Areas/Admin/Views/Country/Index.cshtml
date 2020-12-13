@@ -1,20 +1,37 @@
 ﻿@model IEnumerable<CountryViewModel>
-@{
-    ViewData["Title"] = "Admin Panel - Countries";
-}
 
 @if (TempData.ContainsKey("SuccessMessage"))
 {
     <div class="alert alert-success">@this.TempData["SuccessMessage"]</div>
 }
 
+<h4>Countries</h4>
+<form method="get">
+    <button class="btn btn-primary" asp-action="Create">Create</button>
+</form>
+<br />
 <div class="text-center">
-    <ul class="list-group">
-        @foreach (var country in Model)
-        {
-            <li class="list-group-item">
-                @country.Code - @country.Name
-            </li>
-        }
-    </ul>
+    <table class="table">
+        <thead>
+        <th scope="col">Id</th>
+        <th scope="col">Code</th>
+        <th scope="col">Name</th>
+        <th scope="col">Actions</th>
+        </thead>
+        <tbody>
+            @foreach (var country in Model)
+            {
+                <tr>
+                    <th scope="row">@country.Id</th>
+                    <td>@country.Code</td>
+                    <td>@country.Name</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@country.Id">Edit</a>
+                        |
+                        <a asp-action="Delete" asp-route-id="@country.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

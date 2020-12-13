@@ -29,7 +29,7 @@ namespace FootballForAll.Data.Repositories
 
         public void Delete(TEntity entity)
         {
-            throw new NotImplementedException();
+            DbSet.Remove(entity);
         }
 
         public TEntity Get(int id)

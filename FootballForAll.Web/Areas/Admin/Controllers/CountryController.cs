@@ -21,6 +21,7 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
             var countries = countryService.GetAll();
             var countryViewModels = countries.Select(c => new CountryViewModel
             {
+                Id = c.Id,
                 Name = c.Name,
                 Code = c.Code
             });
@@ -41,8 +42,15 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
             {
                 throw new Exception("Data is not valid.");
             }
-
-            await countryService.CreateAsync(countryViewModel);
+            try
+            {
+                await countryService.CreateAsync(countryViewModel);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.InnerException?.Message ?? ex.Message);
+                return View(countryViewModel);
+            }
 
             TempData["SuccessMessage"] = "Country added successfully.";
 
@@ -54,6 +62,7 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
             var country = countryService.Get(id);
             var countryViewModel = new CountryViewModel
             {
+                Id = id,
                 Name = country.Name,
                 Code = country.Code
             };
@@ -69,7 +78,15 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
                 throw new Exception("Data is not valid.");
             }
 
-            await countryService.UpdateAsync(id, countryViewModel);
+            try
+            {
+                await countryService.UpdateAsync(countryViewModel);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.InnerException?.Message ?? ex.Message);
+                return View(countryViewModel);
+            }
 
             TempData["SuccessMessage"] = $"Country {countryViewModel.Name} updated successfully.";
 
@@ -78,13 +95,37 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
 
         public IActionResult Delete(int id)
         {
-            throw new NotImplementedException();
+            var country = countryService.Get(id);
+            var countryViewModel = new CountryViewModel
+            {
+                Id = id,
+                Name = country.Name,
+                Code = country.Code
+            };
+
+            ViewData["EntityName"] = "Country";
+
+            return View("../Shared/_Delete", countryViewModel);
         }
 
         [HttpPost]
-        public IActionResult Delete(CountryViewModel countryModel)
+        public async Task<IActionResult> Delete(CountryViewModel countryViewModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await countryService.DeleteAsync(countryViewModel.Id);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.InnerException?.Message ?? ex.Message);
+                ViewData["EntityName"] = "Country";
+
+                return View("../Shared/_Delete", countryViewModel);
+            }
+
+            TempData["SuccessMessage"] = "Country deleted successfully.";
+
+            return RedirectToAction("Index");
         }
     }
 }

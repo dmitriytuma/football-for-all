@@ -49,17 +49,17 @@ namespace FootballForAll.Services.Implementations
             await countryRepository.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(int id, CountryViewModel countryViewModel)
+        public async Task UpdateAsync(CountryViewModel countryViewModel)
         {
             var allCountries = countryRepository.All();
-            var country = allCountries.FirstOrDefault(c => c.Id == id);
+            var country = allCountries.FirstOrDefault(c => c.Id == countryViewModel.Id);
 
             if (country is null)
             {
                 throw new Exception($"Country not found");
             }
 
-            var doesCountryExist = allCountries.Any(c => c.Id != id && (c.Name == countryViewModel.Name || c.Code == countryViewModel.Code));
+            var doesCountryExist = allCountries.Any(c => c.Id != countryViewModel.Id && (c.Name == countryViewModel.Name || c.Code == countryViewModel.Code));
 
             if (doesCountryExist)
             {
@@ -69,7 +69,22 @@ namespace FootballForAll.Services.Implementations
             country.Name = countryViewModel.Name;
             country.Code = countryViewModel.Code;
 
-            //countryRepository.Update(country);
+            await countryRepository.SaveChangesAsync();
+        }
+
+
+        public async Task DeleteAsync(int id)
+        {
+            var allCountries = countryRepository.All();
+            var country = allCountries.FirstOrDefault(c => c.Id == id);
+
+            if (country is null)
+            {
+                throw new Exception($"Country not found");
+            }
+
+            countryRepository.Delete(country);
+
             await countryRepository.SaveChangesAsync();
         }
     }

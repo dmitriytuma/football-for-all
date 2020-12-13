@@ -15,7 +15,9 @@ namespace FootballForAll.Services.Interfaces
 
         Task CreateAsync(CountryViewModel countryViewModel);
 
-        Task UpdateAsync(int id, CountryViewModel countryViewModel);
+        Task UpdateAsync(CountryViewModel countryViewModel);
+
+        Task DeleteAsync(int id);
 
     }
 }

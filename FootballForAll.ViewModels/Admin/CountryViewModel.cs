@@ -2,7 +2,7 @@
 
 namespace FootballForAll.ViewModels.Admin
 {
-    public class CountryViewModel
+    public class CountryViewModel : BaseViewModel
     {
         [Required]
         [MaxLength(100)]
