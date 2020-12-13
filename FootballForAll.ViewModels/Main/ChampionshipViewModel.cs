@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FootballForAll.Web.Models
+namespace FootballForAll.ViewModels.Main
 {
     public class ChampionshipViewModel
     {

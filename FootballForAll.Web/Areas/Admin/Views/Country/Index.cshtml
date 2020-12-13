@@ -1,0 +1,20 @@
+﻿@model IEnumerable<CountryViewModel>
+@{
+    ViewData["Title"] = "Admin Panel - Countries";
+}
+
+@if (TempData.ContainsKey("SuccessMessage"))
+{
+    <div class="alert alert-success">@this.TempData["SuccessMessage"]</div>
+}
+
+<div class="text-center">
+    <ul class="list-group">
+        @foreach (var country in Model)
+        {
+            <li class="list-group-item">
+                @country.Code - @country.Name
+            </li>
+        }
+    </ul>
+</div>

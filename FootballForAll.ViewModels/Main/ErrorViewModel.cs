@@ -1,6 +1,6 @@
 using System;
 
-namespace FootballForAll.Web.Models
+namespace FootballForAll.ViewModels.Main
 {
     public class ErrorViewModel
     {
