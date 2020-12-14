@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using FootballForAll.Data.Models;
 using FootballForAll.ViewModels.Admin;
@@ -12,6 +10,8 @@ namespace FootballForAll.Services.Interfaces
         Country Get(int id);
 
         IEnumerable<Country> GetAll();
+
+        IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
 
         Task CreateAsync(CountryViewModel countryViewModel);
 

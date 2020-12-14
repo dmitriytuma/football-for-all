@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using FootballForAll.Data;
 using FootballForAll.Data.Models;
 using FootballForAll.Data.Repositories;
 using FootballForAll.Services.Interfaces;
@@ -28,6 +26,19 @@ namespace FootballForAll.Services.Implementations
         public IEnumerable<Country> GetAll()
         {
             return countryRepository.All().ToList();
+        }
+
+        public IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
+        {
+            return countryRepository.All()
+                .Select(x => new
+                {
+                    x.Id,
+                    x.Name,
+                })
+                .OrderBy(x => x.Name)
+                .ToList()
+                .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Name));
         }
 
         public async Task CreateAsync(CountryViewModel countryViewModel)
@@ -71,7 +82,6 @@ namespace FootballForAll.Services.Implementations
 
             await countryRepository.SaveChangesAsync();
         }
-
 
         public async Task DeleteAsync(int id)
         {

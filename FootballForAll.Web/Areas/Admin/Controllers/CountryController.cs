@@ -71,7 +71,7 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, CountryViewModel countryViewModel)
+        public async Task<IActionResult> Edit(CountryViewModel countryViewModel)
         {
             if (!ModelState.IsValid)
             {
