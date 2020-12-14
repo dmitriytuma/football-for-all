@@ -49,7 +49,10 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception("Data is not valid.");
+                ModelState.AddModelError(string.Empty, "Data is not valid");
+                championshipViewModel.CountriesItems = countryService.GetAllAsKeyValuePairs();
+
+                return View(championshipViewModel);
             }
             try
             {
@@ -58,6 +61,8 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.InnerException?.Message ?? ex.Message);
+                championshipViewModel.CountriesItems = countryService.GetAllAsKeyValuePairs();
+
                 return View(championshipViewModel);
             }
 
@@ -88,7 +93,10 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception("Data is not valid.");
+                ModelState.AddModelError(string.Empty, "Data is not valid");
+                championshipViewModel.CountriesItems = countryService.GetAllAsKeyValuePairs();
+
+                return View(championshipViewModel);
             }
 
             try
@@ -98,6 +106,8 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.InnerException?.Message ?? ex.Message);
+                championshipViewModel.CountriesItems = countryService.GetAllAsKeyValuePairs();
+
                 return View(championshipViewModel);
             }
 

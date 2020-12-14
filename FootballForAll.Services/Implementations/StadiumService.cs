@@ -50,6 +50,19 @@ namespace FootballForAll.Services.Implementations
             }
         }
 
+        public IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
+        {
+            return stadiumRepository.All()
+                .Select(x => new
+                {
+                    x.Id,
+                    x.Name,
+                })
+                .OrderBy(x => x.Name)
+                .ToList()
+                .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Name));
+        }
+
         public async Task CreateAsync(StadiumViewModel stadiumViewModel)
         {
             var doesStadiumExist = stadiumRepository.All().Any(c => c.Name == stadiumViewModel.Name);

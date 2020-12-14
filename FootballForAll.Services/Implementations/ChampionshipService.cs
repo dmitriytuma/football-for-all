@@ -36,19 +36,6 @@ namespace FootballForAll.Services.Implementations
             }
         }
 
-        public IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
-        {
-            return championshipRepository.All()
-                .Select(x => new
-                {
-                    x.Id,
-                    x.Name,
-                })
-                .OrderBy(x => x.Name)
-                .ToList()
-                .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Name));
-        }
-
         public IEnumerable<Championship> GetAll(bool toIncludeRelatedData = true)
         {
             if (toIncludeRelatedData)
@@ -61,6 +48,19 @@ namespace FootballForAll.Services.Implementations
             {
                 return championshipRepository.All().ToList();
             }
+        }
+
+        public IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
+        {
+            return championshipRepository.All()
+                .Select(x => new
+                {
+                    x.Id,
+                    x.Name,
+                })
+                .OrderBy(x => x.Name)
+                .ToList()
+                .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Name));
         }
 
         public async Task CreateAsync(ChampionshipViewModel championshipViewModel)

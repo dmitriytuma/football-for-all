@@ -5,17 +5,17 @@ using FootballForAll.ViewModels.Admin;
 
 namespace FootballForAll.Services.Interfaces
 {
-    public interface IStadiumService
+    public interface IClubService
     {
-        Stadium Get(int id, bool toIncludeRelatedData = true);
+        Club Get(int id, bool toIncludeRelatedData = true);
 
-        IEnumerable<Stadium> GetAll(bool toIncludeRelatedData = true);
+        IEnumerable<Club> GetAll(bool toIncludeRelatedData = true);
 
         IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
 
-        Task CreateAsync(StadiumViewModel stadiumViewModel);
+        Task CreateAsync(ClubViewModel clubViewModel);
 
-        Task UpdateAsync(StadiumViewModel stadiumViewModel);
+        Task UpdateAsync(ClubViewModel clubViewModel);
 
         Task DeleteAsync(int id);
 
