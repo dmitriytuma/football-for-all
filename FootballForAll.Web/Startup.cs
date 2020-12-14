@@ -45,6 +45,7 @@ namespace FootballForAll.Web
             // Add custom services
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IStadiumService, StadiumService>();
+            services.AddTransient<IChampionshipService, ChampionshipService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -81,7 +81,7 @@ namespace FootballForAll.Services.Implementations
                 throw new Exception($"Stadium not found");
             }
 
-            var doesStadiumExist = allStadiums.Any(c => c.Id != stadiumViewModel.Id && (c.Name == stadiumViewModel.Name));
+            var doesStadiumExist = allStadiums.Any(c => c.Id != stadiumViewModel.Id && c.Name == stadiumViewModel.Name);
 
             if (doesStadiumExist)
             {
@@ -103,7 +103,7 @@ namespace FootballForAll.Services.Implementations
 
             if (stadium is null)
             {
-                throw new Exception($"Stadiu not found");
+                throw new Exception($"Stadium not found");
             }
 
             stadiumRepository.Delete(stadium);

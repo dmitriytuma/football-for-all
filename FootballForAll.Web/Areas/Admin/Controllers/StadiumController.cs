@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using FootballForAll.Services.Interfaces;
 using FootballForAll.ViewModels.Admin;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FootballForAll.Web.Areas.Admin.Controllers
 {
