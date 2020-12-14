@@ -50,6 +50,20 @@ namespace FootballForAll.Services.Implementations
             }
         }
 
+        public IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
+        {
+            return seasonRepository.All()
+                .Include(s => s.Championship)
+                .Select(x => new
+                {
+                    x.Id,
+                    Name = $"{x.Championship.Name} / {x.Name}",
+                })
+                .OrderBy(x => x.Name)
+                .ToList()
+                .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Name));
+        }
+
         public async Task CreateAsync(SeasonViewModel seasonViewModel)
         {
             var doesSeasonExist = seasonRepository.All()
