@@ -12,6 +12,9 @@ using FootballForAll.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FootballForAll.Data.Repositories;
+using FootballForAll.Services.Interfaces;
+using FootballForAll.Services.Implementations;
 
 namespace FootballForAll.Web
 {
@@ -35,6 +38,21 @@ namespace FootballForAll.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            // Add data repositories
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            // Add custom services
+            services.AddTransient<ICountryService, CountryService>();
+            services.AddTransient<IStadiumService, StadiumService>();
+            services.AddTransient<IChampionshipService, ChampionshipService>();
+            services.AddTransient<ISeasonService, SeasonService>();
+            services.AddTransient<ISeasonTableService, SeasonTableService>();
+            services.AddTransient<IClubService, ClubService>();
+            services.AddTransient<IMatchService, MatchService>();
+            services.AddTransient<IRefereeService, RefereeService>();
+            services.AddTransient<IManagerService, ManagerService>();
+            services.AddTransient<IPlayerService, PlayerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +79,9 @@ namespace FootballForAll.Web
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "areaRoute",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

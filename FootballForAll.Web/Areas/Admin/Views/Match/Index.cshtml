@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MatchViewModel>
+
+@if (TempData.ContainsKey("SuccessMessage"))
+{
+    <div class="alert alert-success">@this.TempData["SuccessMessage"]</div>
+}
+
+<h4>Matches</h4>
+<form method="get">
+    <button class="btn btn-primary" asp-action="Create">Create</button>
+</form>
+<br />
+<div class="text-center">
+    <table class="table">
+        <thead>
+            <th scope="col">Id</th>
+            <th scope="col">Season</th>
+            <th scope="col">Played On</th>
+            <th scope="col">Home Team</th>
+            <th scope="col">HT Goals</th>
+            <th scope="col">AT Goals</th>
+            <th scope="col">Away Team</th>
+            <th scope="col">Referee</th>
+            <th scope="col">Stadium</th>
+            <th scope="col">Attendance</th>
+        </thead>
+        <tbody>
+            @foreach (var match in Model)
+            {
+                <tr>
+                    <th scope="row">@match.Id</th>
+                    <td>@match.SeasonName</td>
+                    <td>@match.PlayedOn</td>
+                    <td>@match.HomeTeamName</td>
+                    <td>@match.HomeTeamGoals</td>
+                    <td>@match.AwayTeamGoals</td>
+                    <td>@match.AwayTeamName</td>
+                    <td>@match.RefereeName</td>
+                    <td>@match.StadiumName</td>
+                    <td>@match.Attendance</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@match.Id">Edit</a>
+                        |
+                        <a asp-action="Delete" asp-route-id="@match.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SeasonViewModel>
+
+@if (TempData.ContainsKey("SuccessMessage"))
+{
+    <div class="alert alert-success">@this.TempData["SuccessMessage"]</div>
+}
+
+<h4>Seasons</h4>
+<form method="get">
+    <button class="btn btn-primary" asp-action="Create">Create</button>
+</form>
+<br />
+<div class="text-center">
+    <table class="table">
+        <thead>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Championship</th>
+        <th scope="col">Description</th>
+        <th scope="col">Actions</th>
+        </thead>
+        <tbody>
+            @foreach (var season in Model)
+            {
+                <tr>
+                    <th scope="row">@season.Id</th>
+                    <td>@season.Name</td>
+                    <td>@season.ChampionshipName</td>
+                    <td>@season.Description</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@season.Id">Edit</a>
+                        |
+                        <a asp-action="Delete" asp-route-id="@season.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using FootballForAll.Data.Models;
 using FootballForAll.Data.Models.Common;
 using FootballForAll.Data.Models.People;
@@ -53,14 +55,28 @@ namespace FootballForAll.Data
             }
         }
 
-        /// <summary>
-        /// Add audit info (extra info about CreatedOn and ModifiedOn dates) to the changed entities and save the changes to DB.
-        /// </summary>
-        /// <returns>The number of state entries written to the database.</returns>
+        #region SaveChanges
+
         public override int SaveChanges()
         {
+            return SaveChanges(true);
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
             ApplyAuditInfoRules();
-            return base.SaveChanges();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return SaveChangesAsync(true, cancellationToken);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            ApplyAuditInfoRules();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
         /// <summary>
@@ -87,5 +103,7 @@ namespace FootballForAll.Data
                 }
             }
         }
+
+        #endregion SaveChanges
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using FootballForAll.Web.Models;
+using FootballForAll.ViewModels.Main;
 using FootballForAll.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,39 +35,23 @@ namespace FootballForAll.Web.Controllers
                 .Where(m => m.Season == firstSeason)
                 .ToList();
 
-            var seasonViewModel = new SeasonViewModel
+            var seasonViewModel = new SeasonStatisticsViewModel
             {
                 Id = firstSeason.Id,
                 Name = firstSeason.Name,
                 ChampionshipName = championship.Name,
                 Country = championshipCountry.Name,
-                Matches = new List<MatchViewModel>
+                Matches = matches.Select(m => new MatchStatisticsViewModel
                 {
-                    new MatchViewModel
-                    {
-                        HomeTeamName = matches[0].HomeTeam.Name,
-                        AwayTeamName = matches[0].AwayTeam.Name,
-                        HomeTeamGoals = matches[0].HomeTeamGoals,
-                        AwayTeamGoals = matches[0].AwayTeamGoals
-                    },
-                    new MatchViewModel
-                    {
-                        HomeTeamName = matches[1].HomeTeam.Name,
-                        AwayTeamName = matches[1].AwayTeam.Name,
-                        HomeTeamGoals = matches[1].HomeTeamGoals,
-                        AwayTeamGoals = matches[1].AwayTeamGoals
-                    },
-                    new MatchViewModel
-                    {
-                        HomeTeamName = matches[2].HomeTeam.Name,
-                        AwayTeamName = matches[2].AwayTeam.Name,
-                        HomeTeamGoals = matches[2].HomeTeamGoals,
-                        AwayTeamGoals = matches[2].AwayTeamGoals
-                    },
-                }
+                    PlayedOn = m.PlayedOn,
+                    HomeTeamName = m.HomeTeam.Name,
+                    AwayTeamName = m.AwayTeam.Name,
+                    HomeTeamGoals = m.HomeTeamGoals,
+                    AwayTeamGoals = m.AwayTeamGoals
+                }).ToList()
             };
 
-            var seasons = new List<SeasonViewModel> { seasonViewModel };
+            var seasons = new List<SeasonStatisticsViewModel> { seasonViewModel };
 
             return View(seasons);
         }

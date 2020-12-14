@@ -1,0 +1,67 @@
+﻿@model SeasonTableViewModel
+@{
+    var seasonsListItems = Model.SeasonsItems.Select(c => new SelectListItem(c.Value, c.Key));
+    var clubsListItems = Model.ClubsItems.Select(c => new SelectListItem(c.Value, c.Key));
+}
+
+@Html.HiddenFor(model => model.Id)
+
+<h4>
+    Edit season table
+    <small class="text-muted"> | <a asp-action="Index">Back to SeasonTables</a></small>
+</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SeasonId" class="control-label"></label>
+                <select asp-for="SeasonId" class="form-control" asp-items="seasonsListItems"></select>
+                <span asp-validation-for="SeasonId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClubId" class="control-label"></label>
+                <select asp-for="ClubId" class="form-control" asp-items="clubsListItems"></select>
+                <span asp-validation-for="ClubId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Points" class="control-label"></label>
+                <input asp-for="Points" class="form-control" />
+                <span asp-validation-for="Points" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Won" class="control-label"></label>
+                <input asp-for="Won" class="form-control" />
+                <span asp-validation-for="Won" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Drawn" class="control-label"></label>
+                <input asp-for="Drawn" class="form-control" />
+                <span asp-validation-for="Drawn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lost" class="control-label"></label>
+                <input asp-for="Lost" class="form-control" />
+                <span asp-validation-for="Lost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GoalsFor" class="control-label"></label>
+                <input asp-for="GoalsFor" class="form-control" />
+                <span asp-validation-for="GoalsFor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GoalsAgainst" class="control-label"></label>
+                <input asp-for="GoalsAgainst" class="form-control" />
+                <span asp-validation-for="GoalsAgainst" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary" type="submit">Edit</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

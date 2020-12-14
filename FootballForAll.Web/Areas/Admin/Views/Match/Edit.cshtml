@@ -1,0 +1,74 @@
+﻿@model MatchViewModel
+@{
+    var sesonsListItems = Model.SeasonsItems.Select(s => new SelectListItem(s.Value, s.Key));
+    var clubsListItems = Model.ClubsItems.Select(c => new SelectListItem(c.Value, c.Key));
+    var stadiumsListItems = Model.StadiumsItems.Select(c => new SelectListItem(c.Value, c.Key));
+    var refereesListItems = Model.RefereesItems.Select(c => new SelectListItem(c.Value, c.Key));
+}
+
+@Html.HiddenFor(model => model.Id)
+
+<h4>
+    Edit match
+    <small class="text-muted"> | <a asp-action="Index">Back to Matches</a></small>
+</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="form-group">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <label asp-for="SeasonId" class="control-label"></label>
+                <select asp-for="SeasonId" class="form-control" asp-items="sesonsListItems"></select>
+                <span asp-validation-for="SeasonId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlayedOn" class="control-label"></label>
+                <input asp-for="PlayedOn" class="form-control" />
+                <span asp-validation-for="PlayedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HomeTeamId" class="control-label"></label>
+                <select asp-for="HomeTeamId" class="form-control" asp-items="clubsListItems"></select>
+                <span asp-validation-for="HomeTeamId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HomeTeamGoals" class="control-label"></label>
+                <input asp-for="HomeTeamGoals" class="form-control" />
+                <span asp-validation-for="HomeTeamGoals" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AwayTeamGoals" class="control-label"></label>
+                <input asp-for="AwayTeamGoals" class="form-control" />
+                <span asp-validation-for="AwayTeamGoals" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AwayTeamId" class="control-label"></label>
+                <select asp-for="AwayTeamId" class="form-control" asp-items="clubsListItems"></select>
+                <span asp-validation-for="AwayTeamId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RefereeId" class="control-label"></label>
+                <select asp-for="RefereeId" class="form-control" asp-items="refereesListItems"></select>
+                <span asp-validation-for="RefereeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StadiumId" class="control-label"></label>
+                <select asp-for="StadiumId" class="form-control" asp-items="stadiumsListItems"></select>
+                <span asp-validation-for="StadiumId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Attendance" class="control-label"></label>
+                <input asp-for="Attendance" class="form-control" />
+                <span asp-validation-for="Attendance" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary" type="submit">Edit</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using FootballForAll.Data;
-using FootballForAll.Web.Models;
+using FootballForAll.ViewModels.Main;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +22,7 @@ namespace FootballForAll.Web.Controllers
                 .ThenInclude(c => c.Country)
                 .FirstOrDefault();
 
-            var seasonViewModel = new SeasonViewModel
+            var seasonViewModel = new SeasonStatisticsViewModel
             {
                 ChampionshipName = season.Championship.Name,
                 Name = season.Name,

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SeasonTableViewModel>
+
+@if (TempData.ContainsKey("SuccessMessage"))
+{
+    <div class="alert alert-success">@this.TempData["SuccessMessage"]</div>
+}
+
+<h4>SeasonTables</h4>
+<form method="get">
+    <button class="btn btn-primary" asp-action="Create">Create</button>
+</form>
+<br />
+<div class="text-center">
+    <table class="table">
+        <thead>
+            <th scope="col">Id</th>
+            <th scope="col">Season</th>
+            <th scope="col">Club</th>
+            <th scope="col">Points</th>
+            <th scope="col">Won</th>
+            <th scope="col">Drawn</th>
+            <th scope="col">Lost</th>
+            <th scope="col">GoalsFor</th>
+            <th scope="col">GoalsAgainst</th>
+        </thead>
+        <tbody>
+            @foreach (var seasonTable in Model)
+            {
+                <tr>
+                    <th scope="row">@seasonTable.Id</th>
+                    <td>@seasonTable.SeasonName</td>
+                    <td>@seasonTable.ClubName</td>
+                    <td>@seasonTable.Points</td>
+                    <td>@seasonTable.Won</td>
+                    <td>@seasonTable.Drawn</td>
+                    <td>@seasonTable.Lost</td>
+                    <td>@seasonTable.GoalsFor</td>
+                    <td>@seasonTable.GoalsAgainst</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@seasonTable.Id">Edit</a>
+                        |
+                        <a asp-action="Delete" asp-route-id="@seasonTable.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
