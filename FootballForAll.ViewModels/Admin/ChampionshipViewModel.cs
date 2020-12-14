@@ -22,6 +22,7 @@ namespace FootballForAll.ViewModels.Admin
         public string Description { get; set; }
 
         [Required]
+        [Display(Name = "Country")]
         public int CountryId { get; set; }
 
         [Display(Name = "Country")]

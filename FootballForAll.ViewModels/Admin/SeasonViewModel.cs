@@ -16,6 +16,7 @@ namespace FootballForAll.ViewModels.Admin
         public string Description { get; set; }
 
         [Required]
+        [Display(Name = "Championship")]
         public int ChampionshipId { get; set; }
 
         [Display(Name = "Championship")]

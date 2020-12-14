@@ -18,6 +18,7 @@ namespace FootballForAll.ViewModels.Admin.People
         public DateTime BirthDate { get; set; }
 
         [Required]
+        [Display(Name = "Country")]
         public int CountryId { get; set; }
 
         [Display(Name = "Country")]

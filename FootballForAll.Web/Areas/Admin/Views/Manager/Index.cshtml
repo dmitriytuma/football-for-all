@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ManagerViewModel>
+
+@if (TempData.ContainsKey("SuccessMessage"))
+{
+    <div class="alert alert-success">@this.TempData["SuccessMessage"]</div>
+}
+
+<h4>Managers</h4>
+<form method="get">
+    <button class="btn btn-primary" asp-action="Create">Create</button>
+</form>
+<br />
+<div class="text-center">
+    <table class="table">
+        <thead>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Country</th>
+        <th scope="col">Club</th>
+        <th scope="col">BirthDate</th>
+        <th scope="col">Actions</th>
+        </thead>
+        <tbody>
+            @foreach (var manager in Model)
+            {
+                <tr>
+                    <th scope="row">@manager.Id</th>
+                    <td>@manager.Name</td>
+                    <td>@manager.CountryName</td>
+                    <td>@manager.ClubName</td>
+                    <td>@manager.BirthDate.ToShortDateString()</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@manager.Id">Edit</a>
+                        |
+                        <a asp-action="Delete" asp-route-id="@manager.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

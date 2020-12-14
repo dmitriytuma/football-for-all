@@ -18,6 +18,7 @@ namespace FootballForAll.ViewModels.Admin
         public DateTime FoundedOn { get; set; }
 
         [Required]
+        [Display(Name = "Country")]
         public int CountryId { get; set; }
 
         [Display(Name = "Country")]
@@ -26,6 +27,7 @@ namespace FootballForAll.ViewModels.Admin
         public IEnumerable<KeyValuePair<string, string>> CountriesItems { get; set; }
 
         [Required]
+        [Display(Name = "Home stadium")]
         public int HomeStadiumId { get; set; }
 
         [Display(Name = "Home stadium")]

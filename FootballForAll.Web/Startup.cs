@@ -49,6 +49,8 @@ namespace FootballForAll.Web
             services.AddTransient<ISeasonService, SeasonService>();
             services.AddTransient<IClubService, ClubService>();
             services.AddTransient<IRefereeService, RefereeService>();
+            services.AddTransient<IManagerService, ManagerService>();
+            services.AddTransient<IPlayerService, PlayerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
