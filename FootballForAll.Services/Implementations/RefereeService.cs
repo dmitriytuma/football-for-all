@@ -51,6 +51,19 @@ namespace FootballForAll.Services.Implementations
             }
         }
 
+        public IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
+        {
+            return refereeRepository.All()
+                .Select(x => new
+                {
+                    x.Id,
+                    x.Name,
+                })
+                .OrderBy(x => x.Name)
+                .ToList()
+                .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Name));
+        }
+
         public async Task CreateAsync(RefereeViewModel refereeViewModel)
         {
             var doesRefereeExist = refereeRepository.All().Any(c => c.Name == refereeViewModel.Name);

@@ -20,6 +20,6 @@ namespace FootballForAll.ViewModels.Main
         public string Country { get; set; }
 
         [Display(Name = "Matches")]
-        public ICollection<MatchViewModel> Matches { get; set; }
+        public ICollection<MatchStatisticsViewModel> Matches { get; set; }
     }
 }

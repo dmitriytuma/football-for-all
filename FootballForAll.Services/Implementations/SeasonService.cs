@@ -52,8 +52,7 @@ namespace FootballForAll.Services.Implementations
 
         public IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
         {
-            return seasonRepository.All()
-                .Include(s => s.Championship)
+            return GetAll(true)
                 .Select(x => new
                 {
                     x.Id,

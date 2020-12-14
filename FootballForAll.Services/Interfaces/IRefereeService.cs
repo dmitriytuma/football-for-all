@@ -11,6 +11,8 @@ namespace FootballForAll.Services.Interfaces
 
         IEnumerable<Referee> GetAll(bool toIncludeRelatedData = true);
 
+        IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
+
         Task CreateAsync(RefereeViewModel RefereeViewModel);
 
         Task UpdateAsync(RefereeViewModel RefereeViewModel);

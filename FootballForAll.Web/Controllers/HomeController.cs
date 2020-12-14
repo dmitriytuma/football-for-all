@@ -41,30 +41,14 @@ namespace FootballForAll.Web.Controllers
                 Name = firstSeason.Name,
                 ChampionshipName = championship.Name,
                 Country = championshipCountry.Name,
-                Matches = new List<MatchViewModel>
+                Matches = matches.Select(m => new MatchStatisticsViewModel
                 {
-                    new MatchViewModel
-                    {
-                        HomeTeamName = matches[0].HomeTeam.Name,
-                        AwayTeamName = matches[0].AwayTeam.Name,
-                        HomeTeamGoals = matches[0].HomeTeamGoals,
-                        AwayTeamGoals = matches[0].AwayTeamGoals
-                    },
-                    new MatchViewModel
-                    {
-                        HomeTeamName = matches[1].HomeTeam.Name,
-                        AwayTeamName = matches[1].AwayTeam.Name,
-                        HomeTeamGoals = matches[1].HomeTeamGoals,
-                        AwayTeamGoals = matches[1].AwayTeamGoals
-                    },
-                    new MatchViewModel
-                    {
-                        HomeTeamName = matches[2].HomeTeam.Name,
-                        AwayTeamName = matches[2].AwayTeam.Name,
-                        HomeTeamGoals = matches[2].HomeTeamGoals,
-                        AwayTeamGoals = matches[2].AwayTeamGoals
-                    },
-                }
+                    PlayedOn = m.PlayedOn,
+                    HomeTeamName = m.HomeTeam.Name,
+                    AwayTeamName = m.AwayTeam.Name,
+                    HomeTeamGoals = m.HomeTeamGoals,
+                    AwayTeamGoals = m.AwayTeamGoals
+                }).ToList()
             };
 
             var seasons = new List<SeasonStatisticsViewModel> { seasonViewModel };

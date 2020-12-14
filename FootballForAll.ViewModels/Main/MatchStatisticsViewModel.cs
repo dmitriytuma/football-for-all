@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FootballForAll.ViewModels.Main
 {
-    public class MatchViewModel
+    public class MatchStatisticsViewModel
     {
         [Display(Name = "Season")]
         public SeasonStatisticsViewModel Season { get; set; }
