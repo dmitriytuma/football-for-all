@@ -1,11 +1,11 @@
-﻿@model IEnumerable<ChampionshipViewModel>
+﻿@model IEnumerable<RefereeViewModel>
 
 @if (TempData.ContainsKey("SuccessMessage"))
 {
     <div class="alert alert-success">@this.TempData["SuccessMessage"]</div>
 }
 
-<h4>Championships</h4>
+<h4>Referees</h4>
 <form method="get">
     <button class="btn btn-primary" asp-action="Create">Create</button>
 </form>
@@ -16,23 +16,21 @@
         <th scope="col">Id</th>
         <th scope="col">Name</th>
         <th scope="col">Country</th>
-        <th scope="col">Founded</th>
-        <th scope="col">Description</th>
+        <th scope="col">Birth date</th>
         <th scope="col">Actions</th>
         </thead>
         <tbody>
-            @foreach (var championship in Model)
+            @foreach (var referee in Model)
             {
                 <tr>
-                    <th scope="row">@championship.Id</th>
-                    <td>@championship.Name</td>
-                    <td>@championship.CountryName</td>
-                    <td>@championship.FoundedOn.ToShortDateString()</td>
-                    <td>@championship.Description</td>
+                    <th scope="row">@referee.Id</th>
+                    <td>@referee.Name</td>
+                    <td>@referee.CountryName</td>
+                    <td>@referee.BirthDate.ToShortDateString()</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@championship.Id">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@referee.Id">Edit</a>
                         |
-                        <a asp-action="Delete" asp-route-id="@championship.Id">Delete</a>
+                        <a asp-action="Delete" asp-route-id="@referee.Id">Delete</a>
                     </td>
                 </tr>
             }

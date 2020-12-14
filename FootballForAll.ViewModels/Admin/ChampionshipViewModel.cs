@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using FootballForAll.ViewModels.Admin.Common;
 
 namespace FootballForAll.ViewModels.Admin
 {

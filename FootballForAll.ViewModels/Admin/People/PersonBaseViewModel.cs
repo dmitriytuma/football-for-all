@@ -3,24 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FootballForAll.ViewModels.Admin.Common;
 
-namespace FootballForAll.ViewModels.Admin
+namespace FootballForAll.ViewModels.Admin.People
 {
-    public class StadiumViewModel : BaseViewModel
+    public class PersonBaseViewModel : BaseViewModel
     {
         [Required]
         [MaxLength(100)]
-        [Display(Name = "Name")]
+        [Display(Name = "First and Last Names")]
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Founded")]
         [DataType(DataType.Date)]
-        public DateTime FoundedOn { get; set; }
-
-        [Required]
-        [Range(100, 120000)]
-        [Display(Name = "Capacity")]
-        public int Capacity { get; set; }
+        [Display(Name = "Birth date")]
+        public DateTime BirthDate { get; set; }
 
         [Required]
         public int CountryId { get; set; }

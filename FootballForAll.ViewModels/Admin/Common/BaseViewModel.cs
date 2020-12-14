@@ -1,4 +1,4 @@
-﻿namespace FootballForAll.ViewModels.Admin
+﻿namespace FootballForAll.ViewModels.Admin.Common
 {
     public abstract class BaseViewModel
     {

@@ -21,14 +21,14 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var championships = championshipService.GetAll();
-            var championshipViewModels = championships.Select(s => new ChampionshipViewModel
+            var championshipViewModels = championships.Select(c => new ChampionshipViewModel
             {
-                Id = s.Id,
-                Name = s.Name,
-                FoundedOn = s.FoundedOn,
-                Description = s.Description,
-                CountryId = s.Country.Id,
-                CountryName = s.Country.Name
+                Id = c.Id,
+                Name = c.Name,
+                FoundedOn = c.FoundedOn,
+                Description = c.Description,
+                CountryId = c.Country.Id,
+                CountryName = c.Country.Name
             });
 
             return View(championshipViewModels);
