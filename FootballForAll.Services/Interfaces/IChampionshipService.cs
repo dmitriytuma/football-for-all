@@ -11,6 +11,8 @@ namespace FootballForAll.Services.Interfaces
 
         IEnumerable<Championship> GetAll(bool toIncludeRelatedData = true);
 
+        IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
+
         Task CreateAsync(ChampionshipViewModel championshipViewModel);
 
         Task UpdateAsync(ChampionshipViewModel championshipViewModel);

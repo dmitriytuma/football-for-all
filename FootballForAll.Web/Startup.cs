@@ -46,6 +46,7 @@ namespace FootballForAll.Web
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IStadiumService, StadiumService>();
             services.AddTransient<IChampionshipService, ChampionshipService>();
+            services.AddTransient<ISeasonService, SeasonService>();
             services.AddTransient<IRefereeService, RefereeService>();
         }
 

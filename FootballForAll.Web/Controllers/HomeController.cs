@@ -35,7 +35,7 @@ namespace FootballForAll.Web.Controllers
                 .Where(m => m.Season == firstSeason)
                 .ToList();
 
-            var seasonViewModel = new SeasonViewModel
+            var seasonViewModel = new SeasonStatisticsViewModel
             {
                 Id = firstSeason.Id,
                 Name = firstSeason.Name,
@@ -67,7 +67,7 @@ namespace FootballForAll.Web.Controllers
                 }
             };
 
-            var seasons = new List<SeasonViewModel> { seasonViewModel };
+            var seasons = new List<SeasonStatisticsViewModel> { seasonViewModel };
 
             return View(seasons);
         }

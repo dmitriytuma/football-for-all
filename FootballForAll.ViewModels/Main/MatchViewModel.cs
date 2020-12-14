@@ -6,7 +6,7 @@ namespace FootballForAll.ViewModels.Main
     public class MatchViewModel
     {
         [Display(Name = "Season")]
-        public SeasonViewModel Season { get; set; }
+        public SeasonStatisticsViewModel Season { get; set; }
 
         [Display(Name = "Home team")]
         public string HomeTeamName { get; set; }

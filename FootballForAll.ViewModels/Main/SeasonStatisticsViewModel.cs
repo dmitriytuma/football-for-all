@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FootballForAll.ViewModels.Main
 {
-    public class SeasonViewModel
+    public class SeasonStatisticsViewModel
     {
         public int Id { get; set; }
 
