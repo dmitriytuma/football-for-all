@@ -4,6 +4,8 @@ namespace FootballForAll.ViewModels.Main
 {
     public class FixturesViewModel
     {
+        public int SeasonId { get; set; }
+
         /// <summary>
         /// Name of the championship
         /// </summary>

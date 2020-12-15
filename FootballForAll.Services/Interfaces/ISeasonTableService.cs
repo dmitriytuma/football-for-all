@@ -11,6 +11,8 @@ namespace FootballForAll.Services.Interfaces
 
         IEnumerable<SeasonTable> GetAll(bool toIncludeRelatedData = true);
 
+        IEnumerable<SeasonTable> GetChampionshipSeasonPositions(int id);
+
         Task CreateAsync(SeasonTableViewModel seasonTableViewModel);
 
         Task UpdateAsync(SeasonTableViewModel seasonTableViewModel);
