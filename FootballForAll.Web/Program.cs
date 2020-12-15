@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FootballForAll.Data;
+using FootballForAll.Data.Seeding;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace FootballForAll.Web
 {
@@ -23,8 +18,9 @@ namespace FootballForAll.Web
             //var host = CreateHostBuilder(args).Build();
             //using (var scope = host.Services.CreateScope())
             //{
-            //    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            //    db.Database.Migrate();
+            //    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            //    dbContext.Database.Migrate();
+            //    new ApplicationDbContextSeeder().SeedAsync(dbContext, scope.ServiceProvider).GetAwaiter().GetResult();
             //}
             //host.Run();
         }

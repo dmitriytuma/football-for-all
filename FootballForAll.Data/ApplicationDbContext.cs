@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using FootballForAll.Data.Models;
 using FootballForAll.Data.Models.Common;
 using FootballForAll.Data.Models.People;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootballForAll.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser, ApplicationRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

@@ -3,12 +3,13 @@
     ViewData["Title"] = "Match";
 }
 
-<div class="text-center">
-    <h2>@Model.HomeTeamName @Model.Result @Model.AwayTeamName</h2>
-    <br />
-    <h4><a asp-area="" asp-controller="Season" asp-action="Index" asp-route-id="@Model.SeasonId">@Model.ChampionshipName</a></h4>
-    <br />
-    <h6>Stadium - @Model.StadiumName | Attendance - @(Model.PlayedOn <= DateTime.Now ? Model.Attendance.ToString() : "?")</h6>
-    <h6>Main referee - @Model.MainRefereeName</h6>
-    <h6>Date - @Model.PlayedOn.ToString()</h6>
-</div>
+    <div class="text-center">
+        <h4><a asp-area="" asp-controller="Season" asp-action="Index" asp-route-id="@Model.SeasonId">@Model.ChampionshipName</a></h4>
+        <br />
+        <h2>@Model.HomeTeamName @Model.Result @Model.AwayTeamName</h2>
+        <h6>@Model.PlayedOn.ToShortDateString()</h6>
+        <h6>@Model.PlayedOn.ToShortTimeString()</h6>
+        <br />
+        <h6>Stadium - @Model.StadiumName | Attendance - @(Model.PlayedOn <= DateTime.Now ? Model.Attendance.ToString() : "?")</h6>
+        <h6>Main referee - @Model.MainRefereeName</h6>
+    </div>

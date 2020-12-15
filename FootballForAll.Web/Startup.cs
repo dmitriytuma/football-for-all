@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using FootballForAll.Data.Repositories;
 using FootballForAll.Services.Interfaces;
 using FootballForAll.Services.Implementations;
+using FootballForAll.Data.Models.Common;
 
 namespace FootballForAll.Web
 {
@@ -34,8 +35,11 @@ namespace FootballForAll.Web
                 options
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                 .EnableSensitiveDataLogging());
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
