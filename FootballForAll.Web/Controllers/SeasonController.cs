@@ -22,10 +22,10 @@ namespace FootballForAll.Web.Controllers
                 .ThenInclude(c => c.Country)
                 .FirstOrDefault();
 
-            var seasonViewModel = new SeasonStatisticsViewModel
+            var seasonViewModel = new SeasonDetailsViewModel
             {
                 ChampionshipName = season.Championship.Name,
-                Name = season.Name,
+                SeasonName = season.Name,
                 Country = season.Championship.Country.Name
             };
 
