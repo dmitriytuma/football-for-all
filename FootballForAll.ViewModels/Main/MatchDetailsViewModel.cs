@@ -6,7 +6,7 @@ namespace FootballForAll.ViewModels.Main
     {
         public int SeasonId { get; set; }
 
-        public string SeasonName { get; set; }
+        public string ChampionshipName { get; set; }
 
         public DateTime PlayedOn { get; set; }
 
@@ -18,7 +18,7 @@ namespace FootballForAll.ViewModels.Main
 
         public int AwayTeamGoals { get; set; }
 
-        public string Result => $"{HomeTeamGoals} - {AwayTeamGoals}";
+        public string Result => PlayedOn <= DateTime.Now ? $"{HomeTeamGoals} - {AwayTeamGoals}" : "- / -";
 
         public string MainRefereeName { get; set; }
 

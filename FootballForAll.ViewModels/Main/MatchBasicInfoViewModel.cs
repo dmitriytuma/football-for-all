@@ -16,6 +16,6 @@ namespace FootballForAll.ViewModels.Main
 
         public int AwayTeamGoals { get; set; }
 
-        public string Result => PlayedOn <= DateTime.UtcNow ? $"{HomeTeamGoals} - {AwayTeamGoals}" : "- / -";
+        public string Result => PlayedOn <= DateTime.Now ? $"{HomeTeamGoals} - {AwayTeamGoals}" : "- / -";
     }
 }

@@ -3,9 +3,12 @@
     ViewData["Title"] = "Match";
 }
 
-@*<div class="text-center">
-    <h2>@Model.HomeTeam.Name @Model.Result @Model.AwayTeam.Name</h2>
+<div class="text-center">
+    <h2>@Model.HomeTeamName @Model.Result @Model.AwayTeamName</h2>
     <br />
-    <h6>Stadium - @Model.Stadium | Date - @Model.Date.ToString()</h6>
-    <h6>Main referee - @Model.MainReferee</h6>
-</div>*@
+    <h4><a asp-area="" asp-controller="Season" asp-action="Index" asp-route-id="@Model.SeasonId">@Model.ChampionshipName</a></h4>
+    <br />
+    <h6>Stadium - @Model.StadiumName | Attendance - @(Model.PlayedOn <= DateTime.Now ? Model.Attendance.ToString() : "?")</h6>
+    <h6>Main referee - @Model.MainRefereeName</h6>
+    <h6>Date - @Model.PlayedOn.ToString()</h6>
+</div>

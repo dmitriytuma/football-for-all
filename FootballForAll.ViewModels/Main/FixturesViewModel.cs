@@ -4,6 +4,11 @@ namespace FootballForAll.ViewModels.Main
 {
     public class FixturesViewModel
     {
+        public FixturesViewModel()
+        {
+            Matches = new HashSet<MatchBasicInfoViewModel>();
+        }
+
         public int SeasonId { get; set; }
 
         /// <summary>
