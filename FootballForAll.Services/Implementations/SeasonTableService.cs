@@ -59,6 +59,19 @@ namespace FootballForAll.Services.Implementations
             }
         }
 
+        public IEnumerable<SeasonTable> GetChampionshipSeasonPositions(int id)
+        {
+            return seasonTableRepository.All()
+                .Include(s => s.Season)
+                .ThenInclude(s => s.Championship)
+                .ThenInclude(c => c.Country)
+                .Include(s => s.Club)
+                .Where(s => s.Season.Id == id)
+                .OrderByDescending(s => s.Points)
+                .ThenByDescending(s => s.GoalsFor)
+                .ToList();
+        }
+
         public async Task CreateAsync(SeasonTableViewModel seasonTableViewModel)
         {
             var doesSeasonTableExist = seasonTableRepository.All()

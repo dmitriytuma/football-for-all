@@ -1,21 +1,45 @@
-﻿@model SeasonStatisticsViewModel
+﻿@model SeasonDetailsViewModel
 @{
     ViewData["Title"] = "Season";
+    var tableIndex = 1;
 }
 
 <div class="text-center">
-    <h2>@Model.FullName</h2>
+    <h4>@Model.FullName</h4>
     <h6>@Model.Country</h6>
     <br />
-    @*<h4>Table</h4>
-    <ul class="list-group">
-        @for (int index = 0; index < Model.ResultsTable.Count; index++)
-        {
-            <li class="list-group-item">
-                @(index + 1)
-                -
-                <a asp-area="" asp-controller="Club" asp-action="Index">@Model.ResultsTable[index].Name</a>
-            </li>
-        }
-    </ul>*@
+    @if (Model.Table.Any())
+    {
+        <h5>Table</h5>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Points</th>
+                    <th scope="col">Won</th>
+                    <th scope="col">Drawn</th>
+                    <th scope="col">Lost</th>
+                    <th scope="col">GF</th>
+                    <th scope="col">GA</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var teamPosition in Model.Table)
+                {
+                    <tr>
+                        <th scope="row">@(tableIndex++)</th>
+                        <td>@teamPosition.TeamName</td>
+                        <td>@teamPosition.Points</td>
+                        <td>@teamPosition.Won</td>
+                        <td>@teamPosition.Drawn</td>
+                        <td>@teamPosition.Lost</td>
+                        <td>@teamPosition.GoalsFor</td>
+                        <td>@teamPosition.GoalsAgainst</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>

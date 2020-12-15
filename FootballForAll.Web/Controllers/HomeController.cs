@@ -1,59 +1,44 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FootballForAll.ViewModels.Main;
-using FootballForAll.Data;
-using Microsoft.EntityFrameworkCore;
+using FootballForAll.Services.Interfaces;
 
 namespace FootballForAll.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext dbContext;
+        private readonly IMatchService matchService;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext applicationDbContext)
+        public HomeController(ILogger<HomeController> logger, IMatchService matchService)
         {
             _logger = logger;
-            dbContext = applicationDbContext;
+            this.matchService = matchService;
         }
 
         public IActionResult Index()
         {
-            var firstSeason = dbContext.Seasons
-                .Include(s => s.Championship)
-                .ThenInclude(c => c.Country)
-                .FirstOrDefault();
-            var championship = firstSeason.Championship;
-            var championshipCountry = firstSeason.Championship.Country;
-            var matches = dbContext.Matches
-                .Include(m => m.Season)
-                .Include(m => m.HomeTeam)
-                .Include(m => m.AwayTeam)
-                .Where(m => m.Season == firstSeason)
-                .ToList();
+            var matches = matchService.GetAllGroupedByChampionships();
 
-            var seasonViewModel = new SeasonStatisticsViewModel
+            var fixtures = matches.Select(group => new FixturesViewModel
             {
-                Id = firstSeason.Id,
-                Name = firstSeason.Name,
-                ChampionshipName = championship.Name,
-                Country = championshipCountry.Name,
-                Matches = matches.Select(m => new MatchStatisticsViewModel
-                {
-                    PlayedOn = m.PlayedOn,
-                    HomeTeamName = m.HomeTeam.Name,
-                    AwayTeamName = m.AwayTeam.Name,
-                    HomeTeamGoals = m.HomeTeamGoals,
-                    AwayTeamGoals = m.AwayTeamGoals
-                }).ToList()
-            };
+                SeasonId = group.Key.Id,
+                ChampionshipName = group.Key.Championship.Name,
+                Matches = group
+                    .Select(match => new MatchBasicInfoViewModel
+                    {
+                        MatchId = match.Id,
+                        PlayedOn = match.PlayedOn,
+                        HomeTeamName = match.HomeTeam.Name,
+                        AwayTeamName = match.AwayTeam.Name,
+                        HomeTeamGoals = match.HomeTeamGoals,
+                        AwayTeamGoals = match.AwayTeamGoals
+                    }).ToList()
+            });
 
-            var seasons = new List<SeasonStatisticsViewModel> { seasonViewModel };
-
-            return View(seasons);
+            return View(fixtures);
         }
 
         public IActionResult Contacts()

@@ -72,6 +72,19 @@ namespace FootballForAll.Services.Implementations
             }
         }
 
+        public IEnumerable<IGrouping<Season, Match>> GetAllGroupedByChampionships()
+        {
+            var matches = matchRepository.All()
+                .Include(m => m.HomeTeam)
+                .Include(m => m.AwayTeam)
+                .Include(m => m.Season)
+                .ThenInclude(m => m.Championship)
+                .Where(m => m.Season.Name.StartsWith(DateTime.Now.Year.ToString()))
+                .ToList();
+
+            return matches.GroupBy(m => m.Season);
+        }
+
         public async Task CreateAsync(MatchViewModel matchViewModel)
         {
             var doesMatchExist = matchRepository.All()
