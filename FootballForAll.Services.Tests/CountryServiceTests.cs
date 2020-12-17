@@ -33,10 +33,10 @@ namespace FootballForAll.Services.Tests
 
             await countryService.CreateAsync(countryViewModel);
 
-            var savedCountry = countryService.Get(50);
+            var notExistingCountry = countryService.Get(50);
             var lastSavedCountry = countryService.GetAll().LastOrDefault();
 
-            Assert.Null(savedCountry);
+            Assert.Null(notExistingCountry);
             Assert.Equal("Australia", lastSavedCountry.Name);
             Assert.Equal("AU", lastSavedCountry.Code);
         }
