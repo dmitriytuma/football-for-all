@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FootballForAll.Data.Models;
-using FootballForAll.Data.Models.People;
 using FootballForAll.Data.Repositories;
 using FootballForAll.Services.Implementations;
 using FootballForAll.ViewModels.Admin;
-using FootballForAll.ViewModels.Admin.People;
 using Moq;
 using Xunit;
 
