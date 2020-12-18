@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FootballForAll.Web", "Footb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FootballForAll.Data", "FootballForAll.Data\FootballForAll.Data.csproj", "{8FCE5BC7-E2D4-4134-BE5C-17238D2BBCED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballForAll.ViewModels", "FootballForAll.ViewModels\FootballForAll.ViewModels.csproj", "{15C7895E-18CE-49D9-B482-44A8381928C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FootballForAll.ViewModels", "FootballForAll.ViewModels\FootballForAll.ViewModels.csproj", "{15C7895E-18CE-49D9-B482-44A8381928C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballForAll.Services", "FootballForAll.Services\FootballForAll.Services.csproj", "{1A891E5D-3BD0-407E-9711-D746CA17B918}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FootballForAll.Services", "FootballForAll.Services\FootballForAll.Services.csproj", "{1A891E5D-3BD0-407E-9711-D746CA17B918}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballForAll.Services.Tests", "FootballForAll.Services.Tests\FootballForAll.Services.Tests.csproj", "{5662AD09-16EC-4D51-86FB-6E1AB836ACFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1A891E5D-3BD0-407E-9711-D746CA17B918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A891E5D-3BD0-407E-9711-D746CA17B918}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A891E5D-3BD0-407E-9711-D746CA17B918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5662AD09-16EC-4D51-86FB-6E1AB836ACFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5662AD09-16EC-4D51-86FB-6E1AB836ACFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5662AD09-16EC-4D51-86FB-6E1AB836ACFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5662AD09-16EC-4D51-86FB-6E1AB836ACFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
