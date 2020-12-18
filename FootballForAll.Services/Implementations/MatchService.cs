@@ -7,6 +7,7 @@ using FootballForAll.Data.Models.People;
 using FootballForAll.Data.Repositories;
 using FootballForAll.Services.Interfaces;
 using FootballForAll.ViewModels.Admin;
+using FootballForAll.ViewModels.Main;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootballForAll.Services.Implementations
@@ -72,17 +73,40 @@ namespace FootballForAll.Services.Implementations
             }
         }
 
-        public IEnumerable<IGrouping<Season, Match>> GetAllGroupedByChampionships()
+        private IEnumerable<IGrouping<Season, Match>> GetAllGroupedByChampionships(DateTime dateTime)
         {
             var matches = matchRepository.All()
                 .Include(m => m.HomeTeam)
                 .Include(m => m.AwayTeam)
                 .Include(m => m.Season)
                 .ThenInclude(m => m.Championship)
-                .Where(m => m.Season.Name.StartsWith(DateTime.Now.Year.ToString()))
+                .Where(m => m.PlayedOn.Date == dateTime.Date && m.Season.Name.StartsWith(dateTime.Year.ToString()))
                 .ToList();
 
             return matches.GroupBy(m => m.Season);
+        }
+
+        public IEnumerable<FixturesViewModel> GetAllGroupedByDate(DateTime? dateTime)
+        {
+            var matches = GetAllGroupedByChampionships(dateTime ?? DateTime.Today);
+
+            var groupedMatches = matches.Select(group => new FixturesViewModel
+            {
+                SeasonId = group.Key.Id,
+                ChampionshipName = group.Key.Championship.Name,
+                Matches = group
+                    .Select(match => new MatchBasicInfoViewModel
+                    {
+                        MatchId = match.Id,
+                        PlayedOn = match.PlayedOn,
+                        HomeTeamName = match.HomeTeam.Name,
+                        AwayTeamName = match.AwayTeam.Name,
+                        HomeTeamGoals = match.HomeTeamGoals,
+                        AwayTeamGoals = match.AwayTeamGoals
+                    }).ToList()
+            });
+
+            return groupedMatches;
         }
 
         public async Task CreateAsync(MatchViewModel matchViewModel)

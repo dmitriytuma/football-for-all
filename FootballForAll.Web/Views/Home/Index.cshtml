@@ -3,34 +3,124 @@
     ViewData["Title"] = "Welcome";
 }
 
-<div class="text-center">
-    @foreach (var fixture in Model)
-    {
-        <h4><a asp-area="" asp-controller="Season" asp-action="Index" asp-route-id="@fixture.SeasonId">@fixture.ChampionshipName</a></h4>
-        <br />
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Home team</th>
-                    <th scope="col">Result</th>
-                    <th scope="col">Away team</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var match in fixture.Matches)
-                {
-                    <tr>
-                        <td>@match.PlayedOn</td>
-                        <td>@match.HomeTeamName</td>
-                        <td>
-                            <a asp-area="" asp-controller="Match" asp-action="Index" asp-route-id="@match.MatchId">@match.Result</a>
-                        </td>
-                        <td>@match.AwayTeamName</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
+<div class="text-center" id="buttonsDiv">
+    <button class="btn btn-light btn-sm" onclick="getFixturesByDate(this, -1)">Yesterday</button>
+    <button class="btn btn-primary btn-sm" onclick="getFixturesByDate(this, 0)" disabled>Today</button>
+    <button class="btn btn-light btn-sm" onclick="getFixturesByDate(this, +1)">Tomorrow</button>
 </div>
 <br />
+
+<div class="text-center" id="mainDiv">
+    @if (Model.Any())
+    {
+        @foreach (var fixture in Model)
+        {
+            <h4><a asp-area="" asp-controller="Season" asp-action="Index" asp-route-id="@fixture.SeasonId">@fixture.ChampionshipName</a></h4>
+            <br />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Home team</th>
+                        <th scope="col">Result</th>
+                        <th scope="col">Away team</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var match in fixture.Matches)
+                    {
+                        <tr>
+                            <td>@match.PlayedOn</td>
+                            <td>@match.HomeTeamName</td>
+                            <td>
+                                <a asp-area="" asp-controller="Match" asp-action="Index" asp-route-id="@match.MatchId">@match.Result</a>
+                            </td>
+                            <td>@match.AwayTeamName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+        }
+    }
+    else
+    {
+        <h4>There are no matches for today</h4>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function getFixturesByDate(button, dateTimeCode) {
+
+            var buttonsDiv = $('#buttonsDiv');
+            buttonsDiv.find('button').removeClass('btn-primary').addClass('btn-light').prop('disabled', false);
+            $(button).removeClass('btn-light').addClass('btn-primary').prop('disabled', true);
+
+            var date = new Date();
+            date.setDate(date.getDate() + dateTimeCode);
+
+            var errorHandler = function (error) {
+                var mainDiv = $('#mainDiv');
+                mainDiv.html('<h4>Error occured while fetching info from the server. See development tools for more info.</h4>');
+                console.log({ error });
+            };
+
+            var successHandler = function (fixtures) {
+                var mainDiv = $('#mainDiv');
+
+                if (fixtures.length > 0) {
+                    mainDiv.html('');
+                    for (var i = 0; i < fixtures.length; i++) {
+                        var fixture = fixtures[i];
+                        mainDiv.append(`<h4><a href="/Season/Index/${fixture.seasonId}">${fixture.championshipName}</a></h4>`);
+                        mainDiv.append('<br />');
+
+                        var table = $('<table class="table table-striped"></table>');
+                        table.append(`
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Home team</th>
+                                    <th scope="col">Result</th>
+                                    <th scope="col">Away team</th>
+                                </tr>
+                            </thead>`);
+
+                        var tBody = $('<tbody></tbody>');
+
+                        for (var j = 0; j < fixture.matches.length; j++) {
+                            var match = fixture.matches[j];
+                            var playedOn = new Date(match.playedOn);
+                            var playedOnString = `${playedOn.toLocaleDateString()} ${playedOn.toLocaleTimeString()}`;
+                            tBody.append(`
+                                <tr>
+                                    <td>${playedOnString}</td>
+                                    <td>${match.homeTeamName}</td>
+                                    <td>
+                                        <a href="/Match/Index/${match.matchId}">${match.result}</a>
+                                    </td>
+                                    <td>${match.awayTeamName}</td>
+                                </tr>
+                            `);
+                        }
+
+                        table.append(tBody);
+                        mainDiv.append(table);
+                        mainDiv.append('<br />');
+                    }
+                } else {
+                    mainDiv.html('<h4>There are no matches for this date</h4>');
+                }
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/GetAllFixturesByDate",
+                data: { date: date.toLocaleString() },
+                success: successHandler,
+                error: errorHandler
+            });
+        }
+    </script>
+}

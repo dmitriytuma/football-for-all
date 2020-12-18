@@ -862,7 +862,7 @@ namespace FootballForAll.Services.Tests
 
 
         [Fact]
-        public async Task GetAllGroupedByChampionships()
+        public void GetAllMatchesGroupedByDate()
         {
             var refereesList = new List<Referee>
             {
@@ -938,7 +938,7 @@ namespace FootballForAll.Services.Tests
                 mockStadiumRepo.Object,
                 mockRefereeRepo.Object);
 
-            var groupedMathes = matchService.GetAllGroupedByChampionships();
+            var groupedMathes = matchService.GetAllGroupedByDate(DateTime.Today);
 
             Assert.NotNull(groupedMathes);
         }

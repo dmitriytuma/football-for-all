@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FootballForAll.ViewModels.Main;
 using FootballForAll.Services.Interfaces;
+using System;
 
 namespace FootballForAll.Web.Controllers
 {
@@ -20,25 +21,17 @@ namespace FootballForAll.Web.Controllers
 
         public IActionResult Index()
         {
-            var matches = matchService.GetAllGroupedByChampionships();
-
-            var fixtures = matches.Select(group => new FixturesViewModel
-            {
-                SeasonId = group.Key.Id,
-                ChampionshipName = group.Key.Championship.Name,
-                Matches = group
-                    .Select(match => new MatchBasicInfoViewModel
-                    {
-                        MatchId = match.Id,
-                        PlayedOn = match.PlayedOn,
-                        HomeTeamName = match.HomeTeam.Name,
-                        AwayTeamName = match.AwayTeam.Name,
-                        HomeTeamGoals = match.HomeTeamGoals,
-                        AwayTeamGoals = match.AwayTeamGoals
-                    }).ToList()
-            });
+            var fixtures = matchService.GetAllGroupedByDate(DateTime.Today);
 
             return View(fixtures);
+        }
+
+        [HttpPost]
+        public IActionResult GetAllFixturesByDate(DateTime date)
+        {
+            var fixtures = matchService.GetAllGroupedByDate(date);
+
+            return new JsonResult(fixtures);
         }
 
         public IActionResult Contacts()
