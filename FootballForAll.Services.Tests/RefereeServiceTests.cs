@@ -35,7 +35,9 @@ namespace FootballForAll.Services.Tests
             var refereeViewModel = new RefereeViewModel
             {
                 Name = "Michael Oliver",
-                CountryId = 1
+                CountryId = 1,
+                CountryName = "England",
+                BirthDate = new DateTime(1990, 1, 1)
             };
 
             await refereeService.CreateAsync(refereeViewModel);
@@ -45,6 +47,8 @@ namespace FootballForAll.Services.Tests
 
             Assert.Null(savedReferee);
             Assert.Equal("Michael Oliver", lastSavedReferee.Name);
+            Assert.Equal("England", refereeViewModel.CountryName);
+            Assert.Equal(new DateTime(1990, 1, 1), refereeViewModel.BirthDate);
             Assert.NotNull(lastSavedReferee.Country);
         }
 
@@ -332,6 +336,7 @@ namespace FootballForAll.Services.Tests
             var refereesList = new List<Referee>();
 
             var mockCountryRepo = new Mock<IRepository<Country>>();
+            mockCountryRepo.Setup(r => r.All()).Returns(countriesList.AsQueryable());
             mockCountryRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => countriesList.FirstOrDefault(c => c.Id == id));
 
             var mockRefereeRepo = new Mock<IRepository<Referee>>();
@@ -348,7 +353,8 @@ namespace FootballForAll.Services.Tests
             var firstRefereeViewModel = new RefereeViewModel
             {
                 Name = "Michael Oliver",
-                CountryId = 1
+                CountryId = 1,
+                CountriesItems = new CountryService(mockCountryRepo.Object).GetAllAsKeyValuePairs()
             };
 
             var secondRefereeViewModel = new RefereeViewModel
@@ -363,6 +369,7 @@ namespace FootballForAll.Services.Tests
             var keyValuePairs = refereeService.GetAllAsKeyValuePairs().ToList();
 
             Assert.True(keyValuePairs.Count == 2);
+            Assert.True(firstRefereeViewModel.CountriesItems.Count() == 1);
         }
     }
 }

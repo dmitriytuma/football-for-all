@@ -35,7 +35,9 @@ namespace FootballForAll.Services.Tests
             {
                 Name = "Serie A",
                 FoundedOn = DateTime.Now,
-                CountryId = 1
+                CountryId = 1,
+                CountryName = "Italy",
+                Description = "One of the best championships in the world"
             };
 
             await championshipService.CreateAsync(championshipViewModel);
@@ -45,6 +47,8 @@ namespace FootballForAll.Services.Tests
 
             Assert.Null(savedChampionship);
             Assert.Equal("Serie A", lastSavedChampionship.Name);
+            Assert.Equal("Italy", championshipViewModel.CountryName);
+            Assert.Equal("One of the best championships in the world", championshipViewModel.Description);
         }
 
         [Fact]
@@ -330,6 +334,7 @@ namespace FootballForAll.Services.Tests
             var championshipsList = new List<Championship>();
 
             var mockCountryRepo = new Mock<IRepository<Country>>();
+            mockCountryRepo.Setup(r => r.All()).Returns(countriesList.AsQueryable());
             mockCountryRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => countriesList.FirstOrDefault(c => c.Id == id));
 
             var mockChampionshipRepo = new Mock<IRepository<Championship>>();
@@ -346,7 +351,8 @@ namespace FootballForAll.Services.Tests
             var firstChampionshipViewModel = new ChampionshipViewModel
             {
                 Name = "Serie A",
-                CountryId = 1
+                CountryId = 1,
+                CountriesItems = new CountryService(mockCountryRepo.Object).GetAllAsKeyValuePairs()
             };
 
             var secondChampionshipViewModel = new ChampionshipViewModel
@@ -361,6 +367,7 @@ namespace FootballForAll.Services.Tests
             var keyValuePairs = championshipService.GetAllAsKeyValuePairs().ToList();
 
             Assert.True(keyValuePairs.Count == 2);
+            Assert.True(firstChampionshipViewModel.CountriesItems.Count() == 1);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace FootballForAll.Services.Tests
         public async Task SaveAndLoadStadium()
         {
             var countriesList = new List<Country> {
-                new Country{ Id = 1, Name = "Spasin", Code = "SP" }
+                new Country{ Id = 1, Name = "Spain", Code = "SP" }
             };
             var stadiumsList = new List<Stadium>();
 
@@ -36,7 +36,8 @@ namespace FootballForAll.Services.Tests
                 Name = "Santiago Bernabeu",
                 Capacity = 80000,
                 FoundedOn = DateTime.Now,
-                CountryId = 1
+                CountryId = 1,
+                CountryName = "Spain"
             };
 
             await stadiumService.CreateAsync(stadiumViewModel);
@@ -46,6 +47,7 @@ namespace FootballForAll.Services.Tests
 
             Assert.Null(savedStadium);
             Assert.Equal("Santiago Bernabeu", lastSavedStadium.Name);
+            Assert.Equal("Spain", stadiumViewModel.CountryName);
             Assert.Equal(80000, lastSavedStadium.Capacity);
         }
 
@@ -53,7 +55,7 @@ namespace FootballForAll.Services.Tests
         public async Task SaveAndLoadStadiumWithRelatedData()
         {
             var countriesList = new List<Country> {
-                new Country{ Id = 1, Name = "Spasin", Code = "SP" }
+                new Country{ Id = 1, Name = "Spain", Code = "SP" }
             };
             var stadiumsList = new List<Stadium>();
 
@@ -91,7 +93,7 @@ namespace FootballForAll.Services.Tests
         public async Task SaveAndLoadStadiumsWithRelatedData()
         {
             var countriesList = new List<Country> {
-                new Country{ Id = 1, Name = "Spasin", Code = "SP" }
+                new Country{ Id = 1, Name = "Spain", Code = "SP" }
             };
             var stadiumsList = new List<Stadium>();
 
@@ -128,7 +130,7 @@ namespace FootballForAll.Services.Tests
         public async Task SaveTwoStadiumsWithSameNames()
         {
             var countriesList = new List<Country> {
-                new Country{ Id = 1, Name = "Spasin", Code = "SP" }
+                new Country{ Id = 1, Name = "Spain", Code = "SP" }
             };
             var stadiumsList = new List<Stadium>();
 
@@ -162,7 +164,7 @@ namespace FootballForAll.Services.Tests
         public async Task SaveAndUpdateStadium()
         {
             var countriesList = new List<Country> {
-                new Country{ Id = 1, Name = "Spasin", Code = "SP" }
+                new Country{ Id = 1, Name = "Spain", Code = "SP" }
             };
             var stadiumsList = new List<Stadium>();
 
@@ -208,7 +210,7 @@ namespace FootballForAll.Services.Tests
         public async Task UpdateNotExistingStadium()
         {
             var countriesList = new List<Country> {
-                new Country{ Id = 1, Name = "Spasin", Code = "SP" }
+                new Country{ Id = 1, Name = "Spain", Code = "SP" }
             };
             var stadiumsList = new List<Stadium>();
 
@@ -233,7 +235,7 @@ namespace FootballForAll.Services.Tests
         public async Task SaveAndUpdateStadiumWithNameOfAnotherdExistingStadium()
         {
             var countriesList = new List<Country> {
-                new Country{ Id = 1, Name = "Spasin", Code = "SP" }
+                new Country{ Id = 1, Name = "Spain", Code = "SP" }
             };
             var stadiumsList = new List<Stadium>();
             var id = 1;
@@ -282,7 +284,7 @@ namespace FootballForAll.Services.Tests
         public async Task SaveAndDeleteStadium()
         {
             var countriesList = new List<Country> {
-                new Country{ Id = 1, Name = "Spasin", Code = "SP" }
+                new Country{ Id = 1, Name = "Spain", Code = "SP" }
             };
             var stadiumsList = new List<Stadium>();
 
@@ -318,7 +320,7 @@ namespace FootballForAll.Services.Tests
         public async Task DeleteNotExistingStadium()
         {
             var countriesList = new List<Country> {
-                new Country{ Id = 1, Name = "Spasin", Code = "SP" }
+                new Country{ Id = 1, Name = "Spain", Code = "SP" }
             };
             var stadiumsList = new List<Stadium>();
 
@@ -335,11 +337,12 @@ namespace FootballForAll.Services.Tests
         public async Task GetAllStadiumsAsKeyValuePairs()
         {
             var countriesList = new List<Country> {
-                new Country{ Id = 1, Name = "Spasin", Code = "SP" }
+                new Country{ Id = 1, Name = "Spain", Code = "SP" }
             };
             var stadiumsList = new List<Stadium>();
 
             var mockCountryRepo = new Mock<IRepository<Country>>();
+            mockCountryRepo.Setup(r => r.All()).Returns(countriesList.AsQueryable());
             mockCountryRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => countriesList.FirstOrDefault(c => c.Id == id));
 
             var mockStadiumRepo = new Mock<IRepository<Stadium>>();
@@ -357,13 +360,15 @@ namespace FootballForAll.Services.Tests
             var firstStadiumViewModel = new StadiumViewModel
             {
                 Name = "Santiago Bernabeu",
-                CountryId = 1
+                CountryId = 1,
+                CountriesItems = new CountryService(mockCountryRepo.Object).GetAllAsKeyValuePairs()
             };
 
             var secondStadiumViewModel = new StadiumViewModel
             {
                 Name = "Camp Nou",
-                CountryId = 1
+                CountryId = 1,
+                CountriesItems = new CountryService(mockCountryRepo.Object).GetAllAsKeyValuePairs()
             };
 
             await stadiumService.CreateAsync(firstStadiumViewModel);
@@ -372,6 +377,8 @@ namespace FootballForAll.Services.Tests
             var keyValuePairs = stadiumService.GetAllAsKeyValuePairs().ToList();
 
             Assert.True(keyValuePairs.Count == 2);
+            Assert.True(firstStadiumViewModel.CountriesItems.Count() == 1);
+            Assert.True(secondStadiumViewModel.CountriesItems.Count() == 1);
         }
     }
 }

@@ -34,7 +34,9 @@ namespace FootballForAll.Services.Tests
             var seasonViewModel = new SeasonViewModel
             {
                 Name = "2020/21",
-                ChampionshipId = 1
+                ChampionshipId = 1,
+                ChampionshipName = "Premier League",
+                Description = "Premier League, Season 2020/21"
             };
 
             await seasonService.CreateAsync(seasonViewModel);
@@ -44,6 +46,8 @@ namespace FootballForAll.Services.Tests
 
             Assert.Null(savedSeason);
             Assert.Equal("2020/21", lastSavedSeason.Name);
+            Assert.Equal("Premier League, Season 2020/21", seasonViewModel.Description);
+            Assert.Equal("Premier League", seasonViewModel.ChampionshipName);
             Assert.NotNull(lastSavedSeason.Championship);
         }
 
@@ -325,12 +329,20 @@ namespace FootballForAll.Services.Tests
         [Fact]
         public async Task GetAllSeasonsAsKeyValuePairs()
         {
+            var countriesList = new List<Country>
+            {
+                new Country { Id = 1, Name = "England" }
+            };
             var championshipsList = new List<Championship> {
-                new Championship{ Id = 1, Name = "Premier League" }
+                new Championship { Id = 1, Name = "Premier League" }
             };
             var seasonsList = new List<Season>();
 
+            var mockCountryRepo = new Mock<IRepository<Country>>();
+            mockCountryRepo.Setup(r => r.All()).Returns(countriesList.AsQueryable());
+
             var mockChampionshipRepo = new Mock<IRepository<Championship>>();
+            mockChampionshipRepo.Setup(r => r.All()).Returns(championshipsList.AsQueryable());
             mockChampionshipRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => championshipsList.FirstOrDefault(c => c.Id == id));
 
             var mockSeasonRepo = new Mock<IRepository<Season>>();
@@ -347,7 +359,11 @@ namespace FootballForAll.Services.Tests
             var firstSeasonViewModel = new SeasonViewModel
             {
                 Name = "2020/21",
-                ChampionshipId = 1
+                ChampionshipId = 1,
+                ChampionshipsItems = new ChampionshipService(
+                    mockChampionshipRepo.Object,
+                    mockCountryRepo.Object)
+                    .GetAllAsKeyValuePairs()
             };
 
             var secondSeasonViewModel = new SeasonViewModel
@@ -362,6 +378,7 @@ namespace FootballForAll.Services.Tests
             var keyValuePairs = seasonService.GetAllAsKeyValuePairs().ToList();
 
             Assert.True(keyValuePairs.Count == 2);
+            Assert.True(firstSeasonViewModel.ChampionshipsItems.Count() == 1);
         }
     }
 }
