@@ -68,7 +68,6 @@ namespace FootballForAll.Services.Tests
                 Capacity = stadium.Capacity,
                 Country = stadium.Country
             }));
-            mockStadiumRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => stadiumsList.FirstOrDefault(c => c.Id == id));
 
             var stadiumService = new StadiumService(mockStadiumRepo.Object, mockCountryRepo.Object);
 
@@ -107,7 +106,6 @@ namespace FootballForAll.Services.Tests
                 Capacity = stadium.Capacity,
                 Country = stadium.Country
             }));
-            mockStadiumRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => stadiumsList.FirstOrDefault(c => c.Id == id));
 
             var stadiumService = new StadiumService(mockStadiumRepo.Object, mockCountryRepo.Object);
 
@@ -180,7 +178,6 @@ namespace FootballForAll.Services.Tests
                 Capacity = stadium.Capacity,
                 Country = stadium.Country
             }));
-            mockStadiumRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => stadiumsList.FirstOrDefault(c => c.Id == id));
 
             var stadiumService = new StadiumService(mockStadiumRepo.Object, mockCountryRepo.Object);
 
@@ -216,7 +213,6 @@ namespace FootballForAll.Services.Tests
             var stadiumsList = new List<Stadium>();
 
             var mockCountryRepo = new Mock<IRepository<Country>>();
-            mockCountryRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => countriesList.FirstOrDefault(c => c.Id == id));
 
             var mockStadiumRepo = new Mock<IRepository<Stadium>>();
             mockStadiumRepo.Setup(r => r.All()).Returns(stadiumsList.AsQueryable());
@@ -327,11 +323,8 @@ namespace FootballForAll.Services.Tests
             var stadiumsList = new List<Stadium>();
 
             var mockCountryRepo = new Mock<IRepository<Country>>();
-            mockCountryRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => countriesList.FirstOrDefault(c => c.Id == id));
-
             var mockStadiumRepo = new Mock<IRepository<Stadium>>();
             mockStadiumRepo.Setup(r => r.All()).Returns(stadiumsList.AsQueryable());
-            mockStadiumRepo.Setup(r => r.Delete(It.IsAny<Stadium>())).Callback<Stadium>(stadium => stadiumsList.Remove(stadium));
 
             var stadiumService = new StadiumService(mockStadiumRepo.Object, mockCountryRepo.Object);
 

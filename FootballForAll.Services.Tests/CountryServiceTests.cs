@@ -236,7 +236,6 @@ namespace FootballForAll.Services.Tests
 
             var mockRepo = new Mock<IRepository<Country>>();
             mockRepo.Setup(r => r.All()).Returns(countriesList.AsQueryable());
-            mockRepo.Setup(r => r.Delete(It.IsAny<Country>())).Callback<Country>(country => countriesList.Remove(country));
 
             var countryService = new CountryService(mockRepo.Object);
 
