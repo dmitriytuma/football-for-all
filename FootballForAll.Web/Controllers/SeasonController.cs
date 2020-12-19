@@ -8,27 +8,27 @@ namespace FootballForAll.Web.Controllers
 {
     public class SeasonController : Controller
     {
-        private readonly ISeasonTableService seasonTableService;
+        private readonly ITeamPositionService teamPositionService;
         private readonly ISeasonService seasonService;
 
-        public SeasonController(ISeasonTableService seasonTableService, ISeasonService seasonService)
+        public SeasonController(ITeamPositionService teamPositionService, ISeasonService seasonService)
         {
-            this.seasonTableService = seasonTableService;
+            this.teamPositionService = teamPositionService;
             this.seasonService = seasonService;
         }
 
         public IActionResult Index(int id)
         {
-            var seasonTable = seasonTableService.GetChampionshipSeasonPositions(id).ToList();
+            var teamPosition = teamPositionService.GetChampionshipSeasonPositions(id).ToList();
 
-            if (seasonTable.Any())
+            if (teamPosition.Any())
             {
                 var seasonDetais = new SeasonDetailsViewModel
                 {
-                    ChampionshipName = seasonTable[0].Season.Championship.Name,
-                    SeasonName = seasonTable[0].Season.Name,
-                    Country = seasonTable[0].Season.Championship.Country.Name,
-                    Table = seasonTable.Select(s => new TeamPositionViewModel
+                    ChampionshipName = teamPosition[0].Season.Championship.Name,
+                    SeasonName = teamPosition[0].Season.Name,
+                    Country = teamPosition[0].Season.Championship.Country.Name,
+                    Table = teamPosition.Select(s => new TeamPositionViewModel
                     {
                         TeamName = s.Club.Name,
                         Points = s.Points,

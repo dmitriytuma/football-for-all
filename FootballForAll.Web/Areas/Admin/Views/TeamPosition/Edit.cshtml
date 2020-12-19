@@ -1,4 +1,4 @@
-﻿@model SeasonTableViewModel
+﻿@model TeamPositionViewModel
 @{
     var seasonsListItems = Model.SeasonsItems.Select(c => new SelectListItem(c.Value, c.Key));
     var clubsListItems = Model.ClubsItems.Select(c => new SelectListItem(c.Value, c.Key));
@@ -7,8 +7,8 @@
 @Html.HiddenFor(model => model.Id)
 
 <h4>
-    Edit season table
-    <small class="text-muted"> | <a asp-action="Index">Back to SeasonTables</a></small>
+    Edit team position
+    <small class="text-muted"> | <a asp-action="Index">Back to TeamPositions</a></small>
 </h4>
 <hr />
 <div class="row">

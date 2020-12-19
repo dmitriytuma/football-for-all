@@ -1,11 +1,11 @@
-﻿@model IEnumerable<SeasonTableViewModel>
+﻿@model IEnumerable<TeamPositionViewModel>
 
 @if (TempData.ContainsKey("SuccessMessage"))
 {
     <div class="alert alert-success">@this.TempData["SuccessMessage"]</div>
 }
 
-<h4>SeasonTables</h4>
+<h4>TeamPositions</h4>
 <form method="get">
     <button class="btn btn-primary" asp-action="Create">Create</button>
 </form>
@@ -25,22 +25,22 @@
             <th scope="col">Actions</th>
         </thead>
         <tbody>
-            @foreach (var seasonTable in Model)
+            @foreach (var teamPosition in Model)
             {
                 <tr>
-                    <th scope="row">@seasonTable.Id</th>
-                    <td>@seasonTable.SeasonName</td>
-                    <td>@seasonTable.ClubName</td>
-                    <td>@seasonTable.Points</td>
-                    <td>@seasonTable.Won</td>
-                    <td>@seasonTable.Drawn</td>
-                    <td>@seasonTable.Lost</td>
-                    <td>@seasonTable.GoalsFor</td>
-                    <td>@seasonTable.GoalsAgainst</td>
+                    <th scope="row">@teamPosition.Id</th>
+                    <td>@teamPosition.SeasonName</td>
+                    <td>@teamPosition.ClubName</td>
+                    <td>@teamPosition.Points</td>
+                    <td>@teamPosition.Won</td>
+                    <td>@teamPosition.Drawn</td>
+                    <td>@teamPosition.Lost</td>
+                    <td>@teamPosition.GoalsFor</td>
+                    <td>@teamPosition.GoalsAgainst</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@seasonTable.Id">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@teamPosition.Id">Edit</a>
                         |
-                        <a asp-action="Delete" asp-route-id="@seasonTable.Id">Delete</a>
+                        <a asp-action="Delete" asp-route-id="@teamPosition.Id">Delete</a>
                     </td>
                 </tr>
             }

@@ -4,7 +4,7 @@ using FootballForAll.Data.Models.Common;
 
 namespace FootballForAll.Data.Models
 {
-    public class SeasonTable : BaseModel
+    public class TeamPosition : BaseModel
     {
         [Required]
         public Season Season { get; set; }

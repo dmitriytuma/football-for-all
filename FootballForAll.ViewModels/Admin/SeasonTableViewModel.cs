@@ -4,7 +4,7 @@ using FootballForAll.ViewModels.Admin.Common;
 
 namespace FootballForAll.ViewModels.Admin
 {
-    public class SeasonTableViewModel : BaseViewModel
+    public class TeamPositionViewModel : BaseViewModel
     {
         [Required]
         [Range(0, 255)]

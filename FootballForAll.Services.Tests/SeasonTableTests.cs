@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FootballForAll.Data.Models;
-using FootballForAll.Data.Models.People;
 using FootballForAll.Data.Repositories;
 using FootballForAll.Services.Implementations;
 using FootballForAll.ViewModels.Admin;
-using FootballForAll.ViewModels.Admin.People;
 using Moq;
 using Xunit;
 
 namespace FootballForAll.Services.Tests
 {
-    public class SeasonTableServiceTests
+    public class TeamPositionServiceTests
     {
         [Fact]
-        public async Task SaveAndLoadSeasonTable()
+        public async Task SaveAndLoadTeamPosition()
         {
             var clubsList = new List<Club>
             {
@@ -25,7 +23,7 @@ namespace FootballForAll.Services.Tests
             var seasonsList = new List<Season> {
                 new Season { Id = 1, Name = "2020/21" }
             };
-            var seasonTablesList = new List<SeasonTable>();
+            var teamPositionsList = new List<TeamPosition>();
 
             var mockClubRepo = new Mock<IRepository<Club>>();
             mockClubRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => clubsList.FirstOrDefault(c => c.Id == id));
@@ -33,14 +31,14 @@ namespace FootballForAll.Services.Tests
             var mockSeasonRepo = new Mock<IRepository<Season>>();
             mockSeasonRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => seasonsList.FirstOrDefault(c => c.Id == id));
 
-            var mockSeasonTableRepo = new Mock<IRepository<SeasonTable>>();
-            mockSeasonTableRepo.Setup(r => r.All()).Returns(seasonTablesList.AsQueryable());
-            mockSeasonTableRepo.Setup(r => r.AddAsync(It.IsAny<SeasonTable>())).Callback<SeasonTable>(seasonTable => seasonTablesList.Add(seasonTable));
-            mockSeasonTableRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => seasonTablesList.FirstOrDefault(c => c.Id == id));
+            var mockTeamPositionRepo = new Mock<IRepository<TeamPosition>>();
+            mockTeamPositionRepo.Setup(r => r.All()).Returns(teamPositionsList.AsQueryable());
+            mockTeamPositionRepo.Setup(r => r.AddAsync(It.IsAny<TeamPosition>())).Callback<TeamPosition>(teamPosition => teamPositionsList.Add(teamPosition));
+            mockTeamPositionRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => teamPositionsList.FirstOrDefault(c => c.Id == id));
 
-            var seasonTableService = new SeasonTableService(mockSeasonTableRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
+            var teamPositionService = new TeamPositionService(mockTeamPositionRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
 
-            var seasonTableViewModel = new SeasonTableViewModel
+            var teamPositionViewModel = new TeamPositionViewModel
             {
                 ClubId = 1,
                 ClubName = "Manchester United",
@@ -54,26 +52,26 @@ namespace FootballForAll.Services.Tests
                 GoalsAgainst = 10
             };
 
-            await seasonTableService.CreateAsync(seasonTableViewModel);
+            await teamPositionService.CreateAsync(teamPositionViewModel);
 
-            var savedSeasonTable = seasonTableService.Get(10, false);
-            var lastSavedSeasonTable = seasonTableService.GetAll().LastOrDefault();
+            var savedTeamPosition = teamPositionService.Get(10, false);
+            var lastSavedTeamPosition = teamPositionService.GetAll().LastOrDefault();
 
-            Assert.Null(savedSeasonTable);
-            Assert.Equal("2020/21", seasonTableViewModel.SeasonName);
-            Assert.Equal("Manchester United", seasonTableViewModel.ClubName);
-            Assert.Equal(50, seasonTableViewModel.Points);
-            Assert.Equal(15, seasonTableViewModel.Won);
-            Assert.Equal(5, seasonTableViewModel.Drawn);
-            Assert.Equal(0, seasonTableViewModel.Lost);
-            Assert.Equal(60, seasonTableViewModel.GoalsFor);
-            Assert.Equal(10, seasonTableViewModel.GoalsAgainst);
-            Assert.NotNull(lastSavedSeasonTable.Season);
-            Assert.NotNull(lastSavedSeasonTable.Club);
+            Assert.Null(savedTeamPosition);
+            Assert.Equal("2020/21", teamPositionViewModel.SeasonName);
+            Assert.Equal("Manchester United", teamPositionViewModel.ClubName);
+            Assert.Equal(50, teamPositionViewModel.Points);
+            Assert.Equal(15, teamPositionViewModel.Won);
+            Assert.Equal(5, teamPositionViewModel.Drawn);
+            Assert.Equal(0, teamPositionViewModel.Lost);
+            Assert.Equal(60, teamPositionViewModel.GoalsFor);
+            Assert.Equal(10, teamPositionViewModel.GoalsAgainst);
+            Assert.NotNull(lastSavedTeamPosition.Season);
+            Assert.NotNull(lastSavedTeamPosition.Club);
         }
 
         [Fact]
-        public async Task SaveAndLoadSeasonTableWithRelatedData()
+        public async Task SaveAndLoadTeamPositionWithRelatedData()
         {
             var clubsList = new List<Club>
             {
@@ -82,7 +80,7 @@ namespace FootballForAll.Services.Tests
             var seasonsList = new List<Season> {
                 new Season { Id = 1, Name = "2020/21"}
             };
-            var seasonTablesList = new List<SeasonTable>();
+            var teamPositionsList = new List<TeamPosition>();
 
             var mockClubRepo = new Mock<IRepository<Club>>();
             mockClubRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => clubsList.FirstOrDefault(c => c.Id == id));
@@ -90,34 +88,34 @@ namespace FootballForAll.Services.Tests
             var mockSeasonRepo = new Mock<IRepository<Season>>();
             mockSeasonRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => seasonsList.FirstOrDefault(c => c.Id == id));
 
-            var mockSeasonTableRepo = new Mock<IRepository<SeasonTable>>();
-            mockSeasonTableRepo.Setup(r => r.All()).Returns(seasonTablesList.AsQueryable());
-            mockSeasonTableRepo.Setup(r => r.AddAsync(It.IsAny<SeasonTable>())).Callback<SeasonTable>(seasonTable => seasonTablesList.Add(new SeasonTable
+            var mockTeamPositionRepo = new Mock<IRepository<TeamPosition>>();
+            mockTeamPositionRepo.Setup(r => r.All()).Returns(teamPositionsList.AsQueryable());
+            mockTeamPositionRepo.Setup(r => r.AddAsync(It.IsAny<TeamPosition>())).Callback<TeamPosition>(teamPosition => teamPositionsList.Add(new TeamPosition
             {
                 Id = 1,
-                Season = seasonTable.Season,
-                Club = seasonTable.Club
+                Season = teamPosition.Season,
+                Club = teamPosition.Club
             }));
 
-            var seasonTableService = new SeasonTableService(mockSeasonTableRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
+            var teamPositionService = new TeamPositionService(mockTeamPositionRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
 
-            var seasonTableViewModel = new SeasonTableViewModel
+            var teamPositionViewModel = new TeamPositionViewModel
             {
                 SeasonId = 1,
                 ClubId = 1
             };
 
-            await seasonTableService.CreateAsync(seasonTableViewModel);
+            await teamPositionService.CreateAsync(teamPositionViewModel);
 
-            var savedSeasonTable = seasonTableService.Get(1, true);
+            var savedTeamPosition = teamPositionService.Get(1, true);
 
-            Assert.NotNull(savedSeasonTable);
-            Assert.NotNull(savedSeasonTable.Season);
-            Assert.NotNull(savedSeasonTable.Club);
+            Assert.NotNull(savedTeamPosition);
+            Assert.NotNull(savedTeamPosition.Season);
+            Assert.NotNull(savedTeamPosition.Club);
         }
 
         [Fact]
-        public async Task SaveAndLoadSeasonTablesWithRelatedData()
+        public async Task SaveAndLoadTeamPositionsWithRelatedData()
         {
             var clubsList = new List<Club>
             {
@@ -126,7 +124,7 @@ namespace FootballForAll.Services.Tests
             var seasonsList = new List<Season> {
                 new Season{ Id = 1, Name = "2020/21" }
             };
-            var seasonTablesList = new List<SeasonTable>();
+            var teamPositionsList = new List<TeamPosition>();
 
             var mockClubRepo = new Mock<IRepository<Club>>();
             mockClubRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => clubsList.FirstOrDefault(c => c.Id == id));
@@ -134,32 +132,32 @@ namespace FootballForAll.Services.Tests
             var mockSeasonRepo = new Mock<IRepository<Season>>();
             mockSeasonRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => seasonsList.FirstOrDefault(c => c.Id == id));
 
-            var mockSeasonTableRepo = new Mock<IRepository<SeasonTable>>();
-            mockSeasonTableRepo.Setup(r => r.All()).Returns(seasonTablesList.AsQueryable());
-            mockSeasonTableRepo.Setup(r => r.AddAsync(It.IsAny<SeasonTable>())).Callback<SeasonTable>(seasonTable => seasonTablesList.Add(new SeasonTable
+            var mockTeamPositionRepo = new Mock<IRepository<TeamPosition>>();
+            mockTeamPositionRepo.Setup(r => r.All()).Returns(teamPositionsList.AsQueryable());
+            mockTeamPositionRepo.Setup(r => r.AddAsync(It.IsAny<TeamPosition>())).Callback<TeamPosition>(teamPosition => teamPositionsList.Add(new TeamPosition
             {
                 Id = 1,
-                Season = seasonTable.Season,
-                Club = seasonTable.Club
+                Season = teamPosition.Season,
+                Club = teamPosition.Club
             }));
 
-            var seasonTableService = new SeasonTableService(mockSeasonTableRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
+            var teamPositionService = new TeamPositionService(mockTeamPositionRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
 
-            var seasonTableViewModel = new SeasonTableViewModel
+            var teamPositionViewModel = new TeamPositionViewModel
             {
                 SeasonId = 1,
                 ClubId = 1
             };
 
-            await seasonTableService.CreateAsync(seasonTableViewModel);
+            await teamPositionService.CreateAsync(teamPositionViewModel);
 
-            var savedSeasonTables = seasonTableService.GetAll();
+            var savedTeamPositions = teamPositionService.GetAll();
 
-            Assert.True(savedSeasonTables.Count() == 1);
+            Assert.True(savedTeamPositions.Count() == 1);
         }
 
         [Fact]
-        public async Task SaveTwoSeasonTablesWithSameClubsAndSeasons()
+        public async Task SaveTwoTeamPositionsWithSameClubsAndSeasons()
         {
             var clubsList = new List<Club>
             {
@@ -168,7 +166,7 @@ namespace FootballForAll.Services.Tests
             var seasonsList = new List<Season> {
                 new Season{ Id = 1, Name = "2020/21" }
             };
-            var seasonTablesList = new List<SeasonTable>();
+            var teamPositionsList = new List<TeamPosition>();
 
             var mockClubRepo = new Mock<IRepository<Club>>();
             mockClubRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => clubsList.FirstOrDefault(c => c.Id == id));
@@ -176,31 +174,31 @@ namespace FootballForAll.Services.Tests
             var mockSeasonRepo = new Mock<IRepository<Season>>();
             mockSeasonRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => seasonsList.FirstOrDefault(c => c.Id == id));
 
-            var mockSeasonTableRepo = new Mock<IRepository<SeasonTable>>();
-            mockSeasonTableRepo.Setup(r => r.All()).Returns(seasonTablesList.AsQueryable());
-            mockSeasonTableRepo.Setup(r => r.AddAsync(It.IsAny<SeasonTable>())).Callback<SeasonTable>(seasonTable => seasonTablesList.Add(seasonTable));
+            var mockTeamPositionRepo = new Mock<IRepository<TeamPosition>>();
+            mockTeamPositionRepo.Setup(r => r.All()).Returns(teamPositionsList.AsQueryable());
+            mockTeamPositionRepo.Setup(r => r.AddAsync(It.IsAny<TeamPosition>())).Callback<TeamPosition>(teamPosition => teamPositionsList.Add(teamPosition));
 
-            var seasonTableService = new SeasonTableService(mockSeasonTableRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
+            var teamPositionService = new TeamPositionService(mockTeamPositionRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
 
-            var firstSeasonTableViewModel = new SeasonTableViewModel
+            var firstTeamPositionViewModel = new TeamPositionViewModel
             {
                 SeasonId = 1,
                 ClubId = 1
             };
 
-            var secondSeasonTableViewModel = new SeasonTableViewModel
+            var secondTeamPositionViewModel = new TeamPositionViewModel
             {
                 SeasonId = 1,
                 ClubId = 1
             };
 
-            await seasonTableService.CreateAsync(firstSeasonTableViewModel);
+            await teamPositionService.CreateAsync(firstTeamPositionViewModel);
 
-            await Assert.ThrowsAsync<Exception>(() => seasonTableService.CreateAsync(secondSeasonTableViewModel));
+            await Assert.ThrowsAsync<Exception>(() => teamPositionService.CreateAsync(secondTeamPositionViewModel));
         }
 
         [Fact]
-        public async Task SaveAndUpdateSeasonTable()
+        public async Task SaveAndUpdateTeamPosition()
         {
             var clubsList = new List<Club>
             {
@@ -210,7 +208,7 @@ namespace FootballForAll.Services.Tests
             var seasonsList = new List<Season> {
                 new Season{ Id = 1, Name = "2020/21" }
             };
-            var seasonTablesList = new List<SeasonTable>();
+            var teamPositionsList = new List<TeamPosition>();
 
             var mockClubRepo = new Mock<IRepository<Club>>();
             mockClubRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => clubsList.FirstOrDefault(c => c.Id == id));
@@ -218,41 +216,41 @@ namespace FootballForAll.Services.Tests
             var mockSeasonRepo = new Mock<IRepository<Season>>();
             mockSeasonRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => seasonsList.FirstOrDefault(c => c.Id == id));
 
-            var mockSeasonTableRepo = new Mock<IRepository<SeasonTable>>();
-            mockSeasonTableRepo.Setup(r => r.All()).Returns(seasonTablesList.AsQueryable());
-            mockSeasonTableRepo.Setup(r => r.AddAsync(It.IsAny<SeasonTable>())).Callback<SeasonTable>(seasonTable => seasonTablesList.Add(new SeasonTable
+            var mockTeamPositionRepo = new Mock<IRepository<TeamPosition>>();
+            mockTeamPositionRepo.Setup(r => r.All()).Returns(teamPositionsList.AsQueryable());
+            mockTeamPositionRepo.Setup(r => r.AddAsync(It.IsAny<TeamPosition>())).Callback<TeamPosition>(teamPosition => teamPositionsList.Add(new TeamPosition
             {
                 Id = 1,
-                Season = seasonTable.Season,
-                Club = seasonTable.Club
+                Season = teamPosition.Season,
+                Club = teamPosition.Club
             }));
 
-            var seasonTableService = new SeasonTableService(mockSeasonTableRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
+            var teamPositionService = new TeamPositionService(mockTeamPositionRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
 
-            var seasonTableViewModel = new SeasonTableViewModel
+            var teamPositionViewModel = new TeamPositionViewModel
             {
                 SeasonId = 1,
                 ClubId = 1
             };
 
-            await seasonTableService.CreateAsync(seasonTableViewModel);
+            await teamPositionService.CreateAsync(teamPositionViewModel);
 
-            var updatedViewModel = new SeasonTableViewModel
+            var updatedViewModel = new TeamPositionViewModel
             {
                 Id = 1,
                 SeasonId = 1,
                 ClubId = 2
             };
 
-            await seasonTableService.UpdateAsync(updatedViewModel);
+            await teamPositionService.UpdateAsync(updatedViewModel);
 
-            var savedSeasonTable = seasonTableService.Get(1);
+            var savedTeamPosition = teamPositionService.Get(1);
 
-            Assert.Equal(1, savedSeasonTable.Id);
+            Assert.Equal(1, savedTeamPosition.Id);
         }
 
         [Fact]
-        public async Task UpdateNotExistingSeasonTable()
+        public async Task UpdateNotExistingTeamPosition()
         {
             var clubsList = new List<Club>
             {
@@ -261,27 +259,27 @@ namespace FootballForAll.Services.Tests
             var seasonsList = new List<Season> {
                 new Season{ Id = 1, Name = "2020/21" }
             };
-            var seasonTablesList = new List<SeasonTable>();
+            var teamPositionsList = new List<TeamPosition>();
 
             var mockClubRepo = new Mock<IRepository<Club>>();
             var mockSeasonRepo = new Mock<IRepository<Season>>();
-            var mockSeasonTableRepo = new Mock<IRepository<SeasonTable>>();
-            mockSeasonTableRepo.Setup(r => r.All()).Returns(seasonTablesList.AsQueryable());
+            var mockTeamPositionRepo = new Mock<IRepository<TeamPosition>>();
+            mockTeamPositionRepo.Setup(r => r.All()).Returns(teamPositionsList.AsQueryable());
 
-            var seasonTableService = new SeasonTableService(mockSeasonTableRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
+            var teamPositionService = new TeamPositionService(mockTeamPositionRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
 
-            var updatedViewModel = new SeasonTableViewModel
+            var updatedViewModel = new TeamPositionViewModel
             {
                 Id = 1,
                 SeasonId = 1,
                 ClubId = 1
             };
 
-            await Assert.ThrowsAsync<Exception>(() => seasonTableService.UpdateAsync(updatedViewModel));
+            await Assert.ThrowsAsync<Exception>(() => teamPositionService.UpdateAsync(updatedViewModel));
         }
 
         [Fact]
-        public async Task SaveAndUpdateSeasonTableWithDataOfAnotherdExistingSeasonTable()
+        public async Task SaveAndUpdateTeamPositionWithDataOfAnotherdExistingTeamPosition()
         {
             var clubsList = new List<Club>
             {
@@ -291,7 +289,7 @@ namespace FootballForAll.Services.Tests
             var seasonsList = new List<Season> {
                 new Season{ Id = 1, Name = "2020/21" }
             };
-            var seasonTablesList = new List<SeasonTable>();
+            var teamPositionsList = new List<TeamPosition>();
             var id = 1;
 
             var mockClubRepo = new Mock<IRepository<Club>>();
@@ -300,44 +298,44 @@ namespace FootballForAll.Services.Tests
             var mockSeasonRepo = new Mock<IRepository<Season>>();
             mockSeasonRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => seasonsList.FirstOrDefault(c => c.Id == id));
 
-            var mockSeasonTableRepo = new Mock<IRepository<SeasonTable>>();
-            mockSeasonTableRepo.Setup(r => r.All()).Returns(seasonTablesList.AsQueryable());
-            mockSeasonTableRepo.Setup(r => r.AddAsync(It.IsAny<SeasonTable>())).Callback<SeasonTable>(seasonTable => seasonTablesList.Add(new SeasonTable
+            var mockTeamPositionRepo = new Mock<IRepository<TeamPosition>>();
+            mockTeamPositionRepo.Setup(r => r.All()).Returns(teamPositionsList.AsQueryable());
+            mockTeamPositionRepo.Setup(r => r.AddAsync(It.IsAny<TeamPosition>())).Callback<TeamPosition>(teamPosition => teamPositionsList.Add(new TeamPosition
             {
                 Id = id++,
-                Season = seasonTable.Season,
-                Club = seasonTable.Club
+                Season = teamPosition.Season,
+                Club = teamPosition.Club
             }));
 
-            var seasonTableService = new SeasonTableService(mockSeasonTableRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
+            var teamPositionService = new TeamPositionService(mockTeamPositionRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
 
-            var firstSeasonTableViewModel = new SeasonTableViewModel
+            var firstTeamPositionViewModel = new TeamPositionViewModel
             {
                 SeasonId = 1,
                 ClubId = 1
             };
 
-            var secondSeasonTableViewModel = new SeasonTableViewModel
+            var secondTeamPositionViewModel = new TeamPositionViewModel
             {
                 SeasonId = 1,
                 ClubId = 2
             };
 
-            await seasonTableService.CreateAsync(firstSeasonTableViewModel);
-            await seasonTableService.CreateAsync(secondSeasonTableViewModel);
+            await teamPositionService.CreateAsync(firstTeamPositionViewModel);
+            await teamPositionService.CreateAsync(secondTeamPositionViewModel);
 
-            var secondUpdatedViewModel = new SeasonTableViewModel
+            var secondUpdatedViewModel = new TeamPositionViewModel
             {
                 Id = 2,
                 SeasonId = 1,
                 ClubId = 1
             };
 
-            await Assert.ThrowsAsync<Exception>(() => seasonTableService.UpdateAsync(secondUpdatedViewModel));
+            await Assert.ThrowsAsync<Exception>(() => teamPositionService.UpdateAsync(secondUpdatedViewModel));
         }
 
         [Fact]
-        public async Task SaveAndDeleteSeasonTable()
+        public async Task SaveAndDeleteTeamPosition()
         {
             var clubsList = new List<Club>
             {
@@ -346,7 +344,7 @@ namespace FootballForAll.Services.Tests
             var seasonsList = new List<Season> {
                 new Season{ Id = 1, Name = "2020/21" }
             };
-            var seasonTablesList = new List<SeasonTable>();
+            var teamPositionsList = new List<TeamPosition>();
 
             var mockClubRepo = new Mock<IRepository<Club>>();
             mockClubRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => clubsList.FirstOrDefault(c => c.Id == id));
@@ -354,32 +352,32 @@ namespace FootballForAll.Services.Tests
             var mockSeasonRepo = new Mock<IRepository<Season>>();
             mockSeasonRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => seasonsList.FirstOrDefault(c => c.Id == id));
 
-            var mockSeasonTableRepo = new Mock<IRepository<SeasonTable>>();
-            mockSeasonTableRepo.Setup(r => r.All()).Returns(seasonTablesList.AsQueryable());
-            mockSeasonTableRepo.Setup(r => r.AddAsync(It.IsAny<SeasonTable>())).Callback<SeasonTable>(seasonTable => seasonTablesList.Add(new SeasonTable
+            var mockTeamPositionRepo = new Mock<IRepository<TeamPosition>>();
+            mockTeamPositionRepo.Setup(r => r.All()).Returns(teamPositionsList.AsQueryable());
+            mockTeamPositionRepo.Setup(r => r.AddAsync(It.IsAny<TeamPosition>())).Callback<TeamPosition>(teamPosition => teamPositionsList.Add(new TeamPosition
             {
                 Id = 1,
-                Season = seasonTable.Season,
-                Club = seasonTable.Club
+                Season = teamPosition.Season,
+                Club = teamPosition.Club
             }));
-            mockSeasonTableRepo.Setup(r => r.Delete(It.IsAny<SeasonTable>())).Callback<SeasonTable>(seasonTable => seasonTablesList.Remove(seasonTable));
+            mockTeamPositionRepo.Setup(r => r.Delete(It.IsAny<TeamPosition>())).Callback<TeamPosition>(teamPosition => teamPositionsList.Remove(teamPosition));
 
-            var seasonTableService = new SeasonTableService(mockSeasonTableRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
+            var teamPositionService = new TeamPositionService(mockTeamPositionRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
 
-            var seasonTableViewModel = new SeasonTableViewModel
+            var teamPositionViewModel = new TeamPositionViewModel
             {
                 SeasonId = 1,
                 ClubId = 1
             };
 
-            await seasonTableService.CreateAsync(seasonTableViewModel);
-            await seasonTableService.DeleteAsync(1);
+            await teamPositionService.CreateAsync(teamPositionViewModel);
+            await teamPositionService.DeleteAsync(1);
 
-            Assert.Empty(seasonTableService.GetAll(false));
+            Assert.Empty(teamPositionService.GetAll(false));
         }
 
         [Fact]
-        public async Task DeleteNotExistingSeasonTable()
+        public async Task DeleteNotExistingTeamPosition()
         {
             var clubsList = new List<Club>
             {
@@ -388,16 +386,16 @@ namespace FootballForAll.Services.Tests
             var seasonsList = new List<Season> {
                 new Season{ Id = 1, Name = "2020/21" }
             };
-            var seasonTablesList = new List<SeasonTable>();
+            var teamPositionsList = new List<TeamPosition>();
 
             var mockClubRepo = new Mock<IRepository<Club>>();
             var mockSeasonRepo = new Mock<IRepository<Season>>();
-            var mockSeasonTableRepo = new Mock<IRepository<SeasonTable>>();
-            mockSeasonTableRepo.Setup(r => r.All()).Returns(seasonTablesList.AsQueryable());
+            var mockTeamPositionRepo = new Mock<IRepository<TeamPosition>>();
+            mockTeamPositionRepo.Setup(r => r.All()).Returns(teamPositionsList.AsQueryable());
 
-            var seasonTableService = new SeasonTableService(mockSeasonTableRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
+            var teamPositionService = new TeamPositionService(mockTeamPositionRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
 
-            await Assert.ThrowsAsync<Exception>(() => seasonTableService.DeleteAsync(1));
+            await Assert.ThrowsAsync<Exception>(() => teamPositionService.DeleteAsync(1));
         }
 
         [Fact]
@@ -422,7 +420,7 @@ namespace FootballForAll.Services.Tests
             var seasonsList = new List<Season> {
                 new Season{ Id = 1, Name = "2020/21", Championship = championshipList[0] }
             };
-            var seasonTablesList = new List<SeasonTable>();
+            var teamPositionsList = new List<TeamPosition>();
 
             var mockChampionshipRepo = new Mock<IRepository<Championship>>();
             mockChampionshipRepo.Setup(r => r.All()).Returns(championshipList.AsQueryable());
@@ -444,18 +442,18 @@ namespace FootballForAll.Services.Tests
             mockSeasonRepo.Setup(r => r.All()).Returns(seasonsList.AsQueryable());
             mockSeasonRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => seasonsList.FirstOrDefault(c => c.Id == id));
 
-            var mockSeasonTableRepo = new Mock<IRepository<SeasonTable>>();
-            mockSeasonTableRepo.Setup(r => r.All()).Returns(seasonTablesList.AsQueryable());
-            mockSeasonTableRepo.Setup(r => r.AddAsync(It.IsAny<SeasonTable>())).Callback<SeasonTable>(seasonTable => seasonTablesList.Add(new SeasonTable
+            var mockTeamPositionRepo = new Mock<IRepository<TeamPosition>>();
+            mockTeamPositionRepo.Setup(r => r.All()).Returns(teamPositionsList.AsQueryable());
+            mockTeamPositionRepo.Setup(r => r.AddAsync(It.IsAny<TeamPosition>())).Callback<TeamPosition>(teamPosition => teamPositionsList.Add(new TeamPosition
             {
                 Id = 1,
-                Season = seasonTable.Season,
-                Club = seasonTable.Club
+                Season = teamPosition.Season,
+                Club = teamPosition.Club
             }));
 
-            var seasonTableService = new SeasonTableService(mockSeasonTableRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
+            var teamPositionService = new TeamPositionService(mockTeamPositionRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
 
-            var seasonTableViewModel = new SeasonTableViewModel
+            var teamPositionViewModel = new TeamPositionViewModel
             {
                 SeasonId = 1,
                 ClubId = 1,
@@ -468,10 +466,10 @@ namespace FootballForAll.Services.Tests
                     .GetAllAsKeyValuePairs()
             };
 
-            await seasonTableService.CreateAsync(seasonTableViewModel);
+            await teamPositionService.CreateAsync(teamPositionViewModel);
 
-            Assert.True(seasonTableViewModel.ClubsItems.Count() == 1);
-            Assert.True(seasonTableViewModel.SeasonsItems.Count() == 1);
+            Assert.True(teamPositionViewModel.ClubsItems.Count() == 1);
+            Assert.True(teamPositionViewModel.SeasonsItems.Count() == 1);
         }
 
 
@@ -497,7 +495,7 @@ namespace FootballForAll.Services.Tests
             var seasonsList = new List<Season> {
                 new Season{ Id = 1, Name = "2020/21", Championship = championshipList[0] }
             };
-            var seasonTablesList = new List<SeasonTable>();
+            var teamPositionsList = new List<TeamPosition>();
 
             var mockChampionshipRepo = new Mock<IRepository<Championship>>();
             mockChampionshipRepo.Setup(r => r.All()).Returns(championshipList.AsQueryable());
@@ -519,18 +517,18 @@ namespace FootballForAll.Services.Tests
             mockSeasonRepo.Setup(r => r.All()).Returns(seasonsList.AsQueryable());
             mockSeasonRepo.Setup(r => r.Get(It.IsAny<int>())).Returns<int>(id => seasonsList.FirstOrDefault(c => c.Id == id));
 
-            var mockSeasonTableRepo = new Mock<IRepository<SeasonTable>>();
-            mockSeasonTableRepo.Setup(r => r.All()).Returns(seasonTablesList.AsQueryable());
-            mockSeasonTableRepo.Setup(r => r.AddAsync(It.IsAny<SeasonTable>())).Callback<SeasonTable>(seasonTable => seasonTablesList.Add(new SeasonTable
+            var mockTeamPositionRepo = new Mock<IRepository<TeamPosition>>();
+            mockTeamPositionRepo.Setup(r => r.All()).Returns(teamPositionsList.AsQueryable());
+            mockTeamPositionRepo.Setup(r => r.AddAsync(It.IsAny<TeamPosition>())).Callback<TeamPosition>(teamPosition => teamPositionsList.Add(new TeamPosition
             {
                 Id = 1,
-                Season = seasonTable.Season,
-                Club = seasonTable.Club
+                Season = teamPosition.Season,
+                Club = teamPosition.Club
             }));
 
-            var seasonTableService = new SeasonTableService(mockSeasonTableRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
+            var teamPositionService = new TeamPositionService(mockTeamPositionRepo.Object, mockSeasonRepo.Object, mockClubRepo.Object);
 
-            var positions = seasonTableService.GetChampionshipSeasonPositions(1);
+            var positions = teamPositionService.GetChampionshipSeasonPositions(1);
 
             Assert.NotNull(positions);
         }

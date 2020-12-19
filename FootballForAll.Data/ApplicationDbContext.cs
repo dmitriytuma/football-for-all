@@ -28,7 +28,7 @@ namespace FootballForAll.Data
 
         public DbSet<Championship> Championships { get; set; }
 
-        public DbSet<SeasonTable> SeasonTables { get; set; }
+        public DbSet<TeamPosition> TeamPositions { get; set; }
 
         public DbSet<Club> Clubs { get; set; }
 

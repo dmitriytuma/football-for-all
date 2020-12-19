@@ -1,12 +1,12 @@
-﻿@model SeasonTableViewModel
+﻿@model TeamPositionViewModel
 @{ 
     var seasonsListItems = Model.SeasonsItems.Select(c => new SelectListItem(c.Value, c.Key));
     var clubsListItems = Model.ClubsItems.Select(c => new SelectListItem(c.Value, c.Key));
 }
 
 <h4>
-    Create season tables
-    <small class="text-muted"> | <a asp-action="Index">Back to SeasonTables</a></small>
+    Create team position
+    <small class="text-muted"> | <a asp-action="Index">Back to TeamPositions</a></small>
 </h4>
 <hr />
 <div class="row">
