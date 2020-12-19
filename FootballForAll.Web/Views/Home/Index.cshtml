@@ -15,7 +15,7 @@
     {
         @foreach (var fixture in Model)
         {
-            <h4><a asp-area="" asp-controller="Season" asp-action="Index" asp-route-id="@fixture.SeasonId">@fixture.ChampionshipName</a></h4>
+            <h4><a class="text-dark" asp-area="" asp-controller="Season" asp-action="Index" asp-route-id="@fixture.SeasonId">@fixture.ChampionshipName</a></h4>
             <br />
             <table class="table table-striped">
                 <thead>
@@ -33,7 +33,7 @@
                             <td>@match.PlayedOn</td>
                             <td>@match.HomeTeamName</td>
                             <td>
-                                <a asp-area="" asp-controller="Match" asp-action="Index" asp-route-id="@match.MatchId">@match.Result</a>
+                                <a class="text-dark" asp-area="" asp-controller="Match" asp-action="Index" asp-route-id="@match.MatchId">@match.Result</a>
                             </td>
                             <td>@match.AwayTeamName</td>
                         </tr>
@@ -73,7 +73,7 @@
                     mainDiv.html('');
                     for (var i = 0; i < fixtures.length; i++) {
                         var fixture = fixtures[i];
-                        mainDiv.append(`<h4><a href="/Season/Index/${fixture.seasonId}">${fixture.championshipName}</a></h4>`);
+                        mainDiv.append(`<h4><a class="text-dark" href="/Season/Index/${fixture.seasonId}">${fixture.championshipName}</a></h4>`);
                         mainDiv.append('<br />');
 
                         var table = $('<table class="table table-striped"></table>');

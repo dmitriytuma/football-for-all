@@ -4,7 +4,7 @@
 }
 
     <div class="text-center">
-        <h4><a asp-area="" asp-controller="Season" asp-action="Index" asp-route-id="@Model.SeasonId">@Model.ChampionshipName</a></h4>
+        <h4><a class="text-dark" asp-area="" asp-controller="Season" asp-action="Index" asp-route-id="@Model.SeasonId">@Model.ChampionshipName</a></h4>
         <br />
         <h2>@Model.HomeTeamName @Model.Result @Model.AwayTeamName</h2>
         <h6>@Model.PlayedOn.ToShortDateString()</h6>

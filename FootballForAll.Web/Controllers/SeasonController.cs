@@ -9,18 +9,21 @@ namespace FootballForAll.Web.Controllers
     public class SeasonController : Controller
     {
         private readonly ISeasonTableService seasonTableService;
+        private readonly ISeasonService seasonService;
 
-        public SeasonController(ISeasonTableService seasonTableService)
+        public SeasonController(ISeasonTableService seasonTableService, ISeasonService seasonService)
         {
             this.seasonTableService = seasonTableService;
+            this.seasonService = seasonService;
         }
 
         public IActionResult Index(int id)
         {
             var seasonTable = seasonTableService.GetChampionshipSeasonPositions(id).ToList();
 
-            var seasonDetais = seasonTable.Any()
-                ? new SeasonDetailsViewModel
+            if (seasonTable.Any())
+            {
+                var seasonDetais = new SeasonDetailsViewModel
                 {
                     ChampionshipName = seasonTable[0].Season.Championship.Name,
                     SeasonName = seasonTable[0].Season.Name,
@@ -35,10 +38,21 @@ namespace FootballForAll.Web.Controllers
                         GoalsFor = s.GoalsFor,
                         GoalsAgainst = s.GoalsAgainst
                     }).ToList()
-                }
-                : new SeasonDetailsViewModel();
+                };
 
-            return View(seasonDetais);
+                return View(seasonDetais);
+            }
+            else
+            {
+                var season = seasonService.Get(id);
+                var seasonDetais = new SeasonDetailsViewModel()
+                {
+                    ChampionshipName = season.Championship.Name,
+                    SeasonName = season.Name
+                };
+
+                return View(seasonDetais);
+            }
         }
     }
 }
