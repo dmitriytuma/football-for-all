@@ -38,6 +38,7 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
         {
             var refereeViewModel = new RefereeViewModel
             {
+                BirthDate = DateTime.Now,
                 CountriesItems = countryService.GetAllAsKeyValuePairs()
             };
 

@@ -38,6 +38,7 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
         {
             var stadiumViewModel = new StadiumViewModel
             {
+                FoundedOn = DateTime.Now,
                 CountriesItems = countryService.GetAllAsKeyValuePairs()
             };
 

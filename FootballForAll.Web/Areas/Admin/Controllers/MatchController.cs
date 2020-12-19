@@ -58,6 +58,7 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
         {
             var matchViewModel = new MatchViewModel
             {
+                PlayedOn = DateTime.Now,
                 ClubsItems = clubService.GetAllAsKeyValuePairs(),
                 SeasonsItems = seasonService.GetAllAsKeyValuePairs(),
                 StadiumsItems = stadiumService.GetAllAsKeyValuePairs(),

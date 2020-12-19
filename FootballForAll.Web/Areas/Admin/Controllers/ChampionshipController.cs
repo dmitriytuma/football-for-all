@@ -38,6 +38,7 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
         {
             var championshipViewModel = new ChampionshipViewModel
             {
+                FoundedOn = DateTime.Now,
                 CountriesItems = countryService.GetAllAsKeyValuePairs()
             };
 

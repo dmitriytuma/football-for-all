@@ -44,5 +44,11 @@ namespace FootballForAll.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [Route("/Home/HandleStatusError/{code:int}")]
+        public IActionResult HandleStatusError(int code)
+        {
+            return View($"~/Views/Shared/Status{code}.cshtml");
+        }
     }
 }

@@ -81,6 +81,7 @@ namespace FootballForAll.Services.Implementations
                 .Include(m => m.Season)
                 .ThenInclude(m => m.Championship)
                 .Where(m => m.PlayedOn.Date == dateTime.Date && m.Season.Name.StartsWith(dateTime.Year.ToString()))
+                .OrderBy(m => m.PlayedOn)
                 .ToList();
 
             return matches.GroupBy(m => m.Season);

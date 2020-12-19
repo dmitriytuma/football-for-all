@@ -44,6 +44,7 @@ namespace FootballForAll.Web.Areas.Admin.Controllers
         {
             var managerViewModel = new ManagerViewModel
             {
+                BirthDate = DateTime.Now,
                 CountriesItems = countryService.GetAllAsKeyValuePairs(),
                 ClubsItems = clubService.GetAllAsKeyValuePairs()
             };
